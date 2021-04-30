@@ -3,10 +3,12 @@ RETURN = ":return" + (IDENTIFIER | NUMBER | BOOLEAN);
 
 BLOCK = { COMMAND } ;
 PARAMETERS = IDENTIFIER;
-COMMAND = ( λ | ASSIGNMENT | PRINT | WHILE | IF | BLOCK), ";" ;
-ASSIGNMENT = IDENTIFIER, "=", OREXPR ;
+COMMAND = ( λ | ASSIGNMENT | PRINT | WHILE | FOR |  IF | BLOCK), ";" ;
+
 PRINT = ":console.log", "(", OREXPR, ")" ;
-WHILE = ":while", "(", OREXPR, ")", COMMAND; 
+WHILE = ":while", "(", OREXPR, ")", COMMAND;
+FOR = ":for", "(", ASSIGNMENT, ";", OREXPR, ";", ASSIGNMENT, ")", BLOCK;
+ASSIGNMENT = IDENTIFIER, "=", OREXPR ;
 IF = ":if", "(", OREXPR, ")", COMMAND, { ELSE };
 ELSE: ":else", COMMAND;
 
