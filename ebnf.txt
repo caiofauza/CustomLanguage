@@ -1,0 +1,24 @@
+FUNCTION = ":def", "IDENTIFIER", "(", {PARAMETERS} ")", BLOCK;
+RETURN = ":return" + (IDENTIFIER | NUMBER | BOOLEAN);
+
+BLOCK = { COMMAND } ;
+PARAMETERS = IDENTIFIER;
+COMMAND = ( λ | ASSIGNMENT | PRINT | WHILE | IF | BLOCK), ";" ;
+ASSIGNMENT = IDENTIFIER, "=", OREXPR ;
+PRINT = ":console.log", "(", OREXPR, ")" ;
+WHILE = ":while", "(", OREXPR, ")", COMMAND; 
+IF = ":if", "(", OREXPR, ")", COMMAND, { ELSE };
+ELSE: ":else", COMMAND;
+
+OREXPR = ANDEXPR, { ("or"), ANDEXPR};
+ANDEXPR = EQEXPR, { ("and"), EQEXPR};
+EQEXPR = RELEXPR, { ("==" | "!="), RELEXPR};
+RELEXPR = EXPRESSION, { (">" | "<" | ">=" | "<="), EXPRESSION};
+EXPRESSION = TERM, { ("+" | "-"), TERM } ;
+TERM = FACTOR, { ("*" | "/"), FACTOR } ;
+FACTOR = (("+" | "-" | "!"), FACTOR) | NUMBER | "(", OREXPR, ")" | IDENTIFIER | ":input", "(", ")";
+IDENTIFIER = (LETTER | "_"), { LETTER | DIGIT | "_" } ;
+NUMBER = DIGIT, { DIGIT } ;
+LETTER = ( a | ... | z | A | ... | Z ) ;
+DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 ) ;
+BOOLEAN = "true" | "false";
