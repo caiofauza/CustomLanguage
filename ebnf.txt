@@ -1,16 +1,15 @@
-FUNCTION = "toolkit", "IDENTIFIER", "(", { PARAMETERS } ")", BLOCK;
-RETURN = "recover", (IDENTIFIER | NUMBER | BOOLEAN);
+FUNCTION = "toolkit", "IDENTIFIER", "(", PARAMETERS,  ")", BLOCK;
+RETURN = "recover", IDENTIFIER, OREXPR;
 
 BLOCK = { COMMAND }, { RETURN };
-PARAMETERS = IDENTIFIER;
-COMMAND = ( λ | ASSIGNMENT | PRINT | WHILE | FOR |  IF | BLOCK), ";"; 
+PARAMETERS = (IDENTIFIER), “,”,  { PARAMETERS } | (IDENTIFIER);
+COMMAND = ( λ | ASSIGNMENT | PRINT | WHILE | FOR | IF | BLOCK) ; 
 
 PRINT = "show", "(", OREXPR, ")";
 WHILE = "until", "(", OREXPR, ")", COMMAND;
-FOR = "over", "(", ASSIGNMENT, ";", OREXPR, ";", ASSIGNMENT, ")", BLOCK;
 ASSIGNMENT = IDENTIFIER, "=", OREXPR;
 IF = "if", "(", OREXPR, ")", COMMAND, { ELSE };
-ELSE: "else", COMMAND;
+ELSE=  "else", COMMAND;
 
 OREXPR = ANDEXPR, { ("or"), ANDEXPR};
 ANDEXPR = EQEXPR, { ("and"), EQEXPR};
@@ -18,7 +17,8 @@ EQEXPR = RELEXPR, { ("==" | "!="), RELEXPR};
 RELEXPR = EXPRESSION, { (">" | "<" | ">=" | "<="), EXPRESSION};
 EXPRESSION = TERM, { ("+" | "-"), TERM };
 TERM = FACTOR, { ("*" | "/"), FACTOR };
-FACTOR = (("+" | "-" | "!"), FACTOR) | NUMBER | "(", OREXPR, ")" | IDENTIFIER | "door", "(", ")";
+FACTOR = (("+" | "-" | "!"), FACTOR) | NUMBER | IDENTIFIER | IDENTIFIER, “(“, FUNCTIONPARAMS, “)” | "(", OREXPR, ")" | "door", "(", ")";
+FUNCTIONPARAMS = (OREXPR), “,”, { FUNCTIONPARAMS } | (OREXPR);
 IDENTIFIER = (LETTER | "_"), { LETTER | DIGIT | "_" };
 NUMBER = DIGIT, { DIGIT };
 LETTER = ( a | ... | z | A | ... | Z );

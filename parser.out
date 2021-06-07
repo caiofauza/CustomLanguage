@@ -3,1742 +3,2364 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 Unused terminals:
 
     FOR
-    FUNCTION
-    RETURN
 
 Grammar
 
-Rule 0     S' -> block
-Rule 1     block -> OPENBLOCK listcommand CLOSEBLOCK
-Rule 2     listcommand -> listcommand command
-Rule 3     listcommand -> command
-Rule 4     command -> IDENTIFIER ATTRIB orexpr SEMICOLLON
-Rule 5     command -> PRINT LPAR orexpr RPAR SEMICOLLON
-Rule 6     command -> block
-Rule 7     command -> WHILE LPAR orexpr RPAR command
-Rule 8     command -> IF LPAR orexpr RPAR command
-Rule 9     command -> IF LPAR orexpr RPAR command ELSE command
-Rule 10    orexpr -> orexpr OR andexpr
-Rule 11    orexpr -> andexpr
-Rule 12    andexpr -> andexpr AND eqexpr
-Rule 13    andexpr -> eqexpr
-Rule 14    eqexpr -> eqexpr EQUAL relexpr
-Rule 15    eqexpr -> eqexpr NOTEQUAL relexpr
-Rule 16    eqexpr -> relexpr
-Rule 17    relexpr -> relexpr BIGGER expression
-Rule 18    relexpr -> relexpr SMALLER expression
-Rule 19    relexpr -> relexpr BIGGEREQUAL expression
-Rule 20    relexpr -> relexpr SMALLEREQUAL expression
-Rule 21    relexpr -> expression
-Rule 22    expression -> expression PLUS term
-Rule 23    expression -> expression MINUS term
-Rule 24    expression -> term
-Rule 25    term -> term MULT factor
-Rule 26    term -> term DIV factor
-Rule 27    term -> factor
-Rule 28    factor -> NUMBER
-Rule 29    factor -> IDENTIFIER
-Rule 30    factor -> TRUE
-Rule 31    factor -> FALSE
-Rule 32    factor -> STRING
-Rule 33    factor -> LPAR orexpr RPAR
-Rule 34    factor -> PLUS factor
-Rule 35    factor -> MINUS factor
-Rule 36    factor -> NOT factor
-Rule 37    factor -> INPUT LPAR RPAR
+Rule 0     S' -> functions
+Rule 1     functions -> listfuncdefblock
+Rule 2     listfuncdefblock -> listfuncdefblock funcdefblock
+Rule 3     listfuncdefblock -> funcdefblock
+Rule 4     funcdefblock -> FUNCTION IDENTIFIER LPAR funcparams RPAR block
+Rule 5     funcdefblock -> FUNCTION IDENTIFIER LPAR RPAR block
+Rule 6     funcparams -> IDENTIFIER COMMA funcparams
+Rule 7     funcparams -> IDENTIFIER
+Rule 8     block -> OPENBLOCK listcommand CLOSEBLOCK
+Rule 9     listcommand -> listcommand command
+Rule 10    listcommand -> command
+Rule 11    command -> IDENTIFIER ATTRIB orexpr SEMICOLLON
+Rule 12    command -> PRINT LPAR orexpr RPAR SEMICOLLON
+Rule 13    command -> RETURN IDENTIFIER orexpr SEMICOLLON
+Rule 14    command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+Rule 15    command -> IDENTIFIER LPAR RPAR SEMICOLLON
+Rule 16    command -> block
+Rule 17    command -> WHILE LPAR orexpr RPAR command
+Rule 18    command -> IF LPAR orexpr RPAR command
+Rule 19    command -> IF LPAR orexpr RPAR command ELSE command
+Rule 20    orexpr -> orexpr OR andexpr
+Rule 21    orexpr -> andexpr
+Rule 22    andexpr -> andexpr AND eqexpr
+Rule 23    andexpr -> eqexpr
+Rule 24    eqexpr -> eqexpr EQUAL relexpr
+Rule 25    eqexpr -> eqexpr NOTEQUAL relexpr
+Rule 26    eqexpr -> relexpr
+Rule 27    relexpr -> relexpr BIGGER expression
+Rule 28    relexpr -> relexpr SMALLER expression
+Rule 29    relexpr -> relexpr BIGGEREQUAL expression
+Rule 30    relexpr -> relexpr SMALLEREQUAL expression
+Rule 31    relexpr -> expression
+Rule 32    expression -> expression PLUS term
+Rule 33    expression -> expression MINUS term
+Rule 34    expression -> term
+Rule 35    term -> term MULT factor
+Rule 36    term -> term DIV factor
+Rule 37    term -> factor
+Rule 38    factor -> NUMBER
+Rule 39    factor -> IDENTIFIER
+Rule 40    factor -> IDENTIFIER LPAR inputparams RPAR
+Rule 41    factor -> IDENTIFIER LPAR RPAR
+Rule 42    factor -> TRUE
+Rule 43    factor -> FALSE
+Rule 44    factor -> STRING
+Rule 45    factor -> LPAR orexpr RPAR
+Rule 46    factor -> PLUS factor
+Rule 47    factor -> MINUS factor
+Rule 48    factor -> NOT factor
+Rule 49    factor -> INPUT LPAR RPAR
+Rule 50    inputparams -> orexpr COMMA inputparams
+Rule 51    inputparams -> orexpr
 
 Terminals, with rules where they appear
 
-AND                  : 12
-ATTRIB               : 4
-BIGGER               : 17
-BIGGEREQUAL          : 19
-CLOSEBLOCK           : 1
-DIV                  : 26
-ELSE                 : 9
-EQUAL                : 14
-FALSE                : 31
+AND                  : 22
+ATTRIB               : 11
+BIGGER               : 27
+BIGGEREQUAL          : 29
+CLOSEBLOCK           : 8
+COMMA                : 6 50
+DIV                  : 36
+ELSE                 : 19
+EQUAL                : 24
+FALSE                : 43
 FOR                  : 
-FUNCTION             : 
-IDENTIFIER           : 4 29
-IF                   : 8 9
-INPUT                : 37
-LPAR                 : 5 7 8 9 33 37
-MINUS                : 23 35
-MULT                 : 25
-NOT                  : 36
-NOTEQUAL             : 15
-NUMBER               : 28
-OPENBLOCK            : 1
-OR                   : 10
-PLUS                 : 22 34
-PRINT                : 5
-RETURN               : 
-RPAR                 : 5 7 8 9 33 37
-SEMICOLLON           : 4 5
-SMALLER              : 18
-SMALLEREQUAL         : 20
-STRING               : 32
-TRUE                 : 30
-WHILE                : 7
+FUNCTION             : 4 5
+IDENTIFIER           : 4 5 6 7 11 13 14 15 39 40 41
+IF                   : 18 19
+INPUT                : 49
+LPAR                 : 4 5 12 14 15 17 18 19 40 41 45 49
+MINUS                : 33 47
+MULT                 : 35
+NOT                  : 48
+NOTEQUAL             : 25
+NUMBER               : 38
+OPENBLOCK            : 8
+OR                   : 20
+PLUS                 : 32 46
+PRINT                : 12
+RETURN               : 13
+RPAR                 : 4 5 12 14 15 17 18 19 40 41 45 49
+SEMICOLLON           : 11 12 13 14 15
+SMALLER              : 28
+SMALLEREQUAL         : 30
+STRING               : 44
+TRUE                 : 42
+WHILE                : 17
 error                : 
 
 Nonterminals, with rules where they appear
 
-andexpr              : 10 11 12
-block                : 6 0
-command              : 2 3 7 8 9 9
-eqexpr               : 12 13 14 15
-expression           : 17 18 19 20 21 22 23
-factor               : 25 26 27 34 35 36
-listcommand          : 1 2
-orexpr               : 4 5 7 8 9 10 33
-relexpr              : 14 15 16 17 18 19 20
-term                 : 22 23 24 25 26
+andexpr              : 20 21 22
+block                : 4 5 16
+command              : 9 10 17 18 19 19
+eqexpr               : 22 23 24 25
+expression           : 27 28 29 30 31 32 33
+factor               : 35 36 37 46 47 48
+funcdefblock         : 2 3
+funcparams           : 4 6
+functions            : 0
+inputparams          : 14 40 50
+listcommand          : 8 9
+listfuncdefblock     : 1 2
+orexpr               : 11 12 13 17 18 19 20 45 50 51
+relexpr              : 24 25 26 27 28 29 30
+term                 : 32 33 34 35 36
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . block
-    (1) block -> . OPENBLOCK listcommand CLOSEBLOCK
+    (0) S' -> . functions
+    (1) functions -> . listfuncdefblock
+    (2) listfuncdefblock -> . listfuncdefblock funcdefblock
+    (3) listfuncdefblock -> . funcdefblock
+    (4) funcdefblock -> . FUNCTION IDENTIFIER LPAR funcparams RPAR block
+    (5) funcdefblock -> . FUNCTION IDENTIFIER LPAR RPAR block
 
-    OPENBLOCK       shift and go to state 2
+    FUNCTION        shift and go to state 4
 
-    block                          shift and go to state 1
+    functions                      shift and go to state 1
+    listfuncdefblock               shift and go to state 2
+    funcdefblock                   shift and go to state 3
 
 state 1
 
-    (0) S' -> block .
+    (0) S' -> functions .
 
 
 
 state 2
 
-    (1) block -> OPENBLOCK . listcommand CLOSEBLOCK
-    (2) listcommand -> . listcommand command
-    (3) listcommand -> . command
-    (4) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
-    (5) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
-    (6) command -> . block
-    (7) command -> . WHILE LPAR orexpr RPAR command
-    (8) command -> . IF LPAR orexpr RPAR command
-    (9) command -> . IF LPAR orexpr RPAR command ELSE command
-    (1) block -> . OPENBLOCK listcommand CLOSEBLOCK
+    (1) functions -> listfuncdefblock .
+    (2) listfuncdefblock -> listfuncdefblock . funcdefblock
+    (4) funcdefblock -> . FUNCTION IDENTIFIER LPAR funcparams RPAR block
+    (5) funcdefblock -> . FUNCTION IDENTIFIER LPAR RPAR block
 
-    IDENTIFIER      shift and go to state 5
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    OPENBLOCK       shift and go to state 2
+    $end            reduce using rule 1 (functions -> listfuncdefblock .)
+    FUNCTION        shift and go to state 4
 
-    listcommand                    shift and go to state 3
-    command                        shift and go to state 4
-    block                          shift and go to state 7
+    funcdefblock                   shift and go to state 5
 
 state 3
 
-    (1) block -> OPENBLOCK listcommand . CLOSEBLOCK
-    (2) listcommand -> listcommand . command
-    (4) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
-    (5) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
-    (6) command -> . block
-    (7) command -> . WHILE LPAR orexpr RPAR command
-    (8) command -> . IF LPAR orexpr RPAR command
-    (9) command -> . IF LPAR orexpr RPAR command ELSE command
-    (1) block -> . OPENBLOCK listcommand CLOSEBLOCK
+    (3) listfuncdefblock -> funcdefblock .
 
-    CLOSEBLOCK      shift and go to state 10
-    IDENTIFIER      shift and go to state 5
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    OPENBLOCK       shift and go to state 2
+    FUNCTION        reduce using rule 3 (listfuncdefblock -> funcdefblock .)
+    $end            reduce using rule 3 (listfuncdefblock -> funcdefblock .)
 
-    command                        shift and go to state 11
-    block                          shift and go to state 7
 
 state 4
 
-    (3) listcommand -> command .
+    (4) funcdefblock -> FUNCTION . IDENTIFIER LPAR funcparams RPAR block
+    (5) funcdefblock -> FUNCTION . IDENTIFIER LPAR RPAR block
 
-    CLOSEBLOCK      reduce using rule 3 (listcommand -> command .)
-    IDENTIFIER      reduce using rule 3 (listcommand -> command .)
-    PRINT           reduce using rule 3 (listcommand -> command .)
-    WHILE           reduce using rule 3 (listcommand -> command .)
-    IF              reduce using rule 3 (listcommand -> command .)
-    OPENBLOCK       reduce using rule 3 (listcommand -> command .)
+    IDENTIFIER      shift and go to state 6
 
 
 state 5
 
-    (4) command -> IDENTIFIER . ATTRIB orexpr SEMICOLLON
+    (2) listfuncdefblock -> listfuncdefblock funcdefblock .
 
-    ATTRIB          shift and go to state 12
+    FUNCTION        reduce using rule 2 (listfuncdefblock -> listfuncdefblock funcdefblock .)
+    $end            reduce using rule 2 (listfuncdefblock -> listfuncdefblock funcdefblock .)
 
 
 state 6
 
-    (5) command -> PRINT . LPAR orexpr RPAR SEMICOLLON
+    (4) funcdefblock -> FUNCTION IDENTIFIER . LPAR funcparams RPAR block
+    (5) funcdefblock -> FUNCTION IDENTIFIER . LPAR RPAR block
 
-    LPAR            shift and go to state 13
+    LPAR            shift and go to state 7
 
 
 state 7
 
-    (6) command -> block .
+    (4) funcdefblock -> FUNCTION IDENTIFIER LPAR . funcparams RPAR block
+    (5) funcdefblock -> FUNCTION IDENTIFIER LPAR . RPAR block
+    (6) funcparams -> . IDENTIFIER COMMA funcparams
+    (7) funcparams -> . IDENTIFIER
 
-    CLOSEBLOCK      reduce using rule 6 (command -> block .)
-    IDENTIFIER      reduce using rule 6 (command -> block .)
-    PRINT           reduce using rule 6 (command -> block .)
-    WHILE           reduce using rule 6 (command -> block .)
-    IF              reduce using rule 6 (command -> block .)
-    OPENBLOCK       reduce using rule 6 (command -> block .)
-    ELSE            reduce using rule 6 (command -> block .)
+    RPAR            shift and go to state 10
+    IDENTIFIER      shift and go to state 8
 
+    funcparams                     shift and go to state 9
 
 state 8
 
-    (7) command -> WHILE . LPAR orexpr RPAR command
+    (6) funcparams -> IDENTIFIER . COMMA funcparams
+    (7) funcparams -> IDENTIFIER .
 
-    LPAR            shift and go to state 14
+    COMMA           shift and go to state 11
+    RPAR            reduce using rule 7 (funcparams -> IDENTIFIER .)
 
 
 state 9
 
-    (8) command -> IF . LPAR orexpr RPAR command
-    (9) command -> IF . LPAR orexpr RPAR command ELSE command
+    (4) funcdefblock -> FUNCTION IDENTIFIER LPAR funcparams . RPAR block
 
-    LPAR            shift and go to state 15
+    RPAR            shift and go to state 12
 
 
 state 10
 
-    (1) block -> OPENBLOCK listcommand CLOSEBLOCK .
+    (5) funcdefblock -> FUNCTION IDENTIFIER LPAR RPAR . block
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
 
-    $end            reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    CLOSEBLOCK      reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    IDENTIFIER      reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    PRINT           reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    WHILE           reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    IF              reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    OPENBLOCK       reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
-    ELSE            reduce using rule 1 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    OPENBLOCK       shift and go to state 14
 
+    block                          shift and go to state 13
 
 state 11
 
-    (2) listcommand -> listcommand command .
+    (6) funcparams -> IDENTIFIER COMMA . funcparams
+    (6) funcparams -> . IDENTIFIER COMMA funcparams
+    (7) funcparams -> . IDENTIFIER
 
-    CLOSEBLOCK      reduce using rule 2 (listcommand -> listcommand command .)
-    IDENTIFIER      reduce using rule 2 (listcommand -> listcommand command .)
-    PRINT           reduce using rule 2 (listcommand -> listcommand command .)
-    WHILE           reduce using rule 2 (listcommand -> listcommand command .)
-    IF              reduce using rule 2 (listcommand -> listcommand command .)
-    OPENBLOCK       reduce using rule 2 (listcommand -> listcommand command .)
+    IDENTIFIER      shift and go to state 8
 
+    funcparams                     shift and go to state 15
 
 state 12
 
-    (4) command -> IDENTIFIER ATTRIB . orexpr SEMICOLLON
-    (10) orexpr -> . orexpr OR andexpr
-    (11) orexpr -> . andexpr
-    (12) andexpr -> . andexpr AND eqexpr
-    (13) andexpr -> . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (4) funcdefblock -> FUNCTION IDENTIFIER LPAR funcparams RPAR . block
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    OPENBLOCK       shift and go to state 14
 
-    orexpr                         shift and go to state 17
-    andexpr                        shift and go to state 18
-    eqexpr                         shift and go to state 19
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
+    block                          shift and go to state 16
 
 state 13
 
-    (5) command -> PRINT LPAR . orexpr RPAR SEMICOLLON
-    (10) orexpr -> . orexpr OR andexpr
-    (11) orexpr -> . andexpr
-    (12) andexpr -> . andexpr AND eqexpr
-    (13) andexpr -> . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (5) funcdefblock -> FUNCTION IDENTIFIER LPAR RPAR block .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    FUNCTION        reduce using rule 5 (funcdefblock -> FUNCTION IDENTIFIER LPAR RPAR block .)
+    $end            reduce using rule 5 (funcdefblock -> FUNCTION IDENTIFIER LPAR RPAR block .)
 
-    orexpr                         shift and go to state 33
-    andexpr                        shift and go to state 18
-    eqexpr                         shift and go to state 19
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 14
 
-    (7) command -> WHILE LPAR . orexpr RPAR command
-    (10) orexpr -> . orexpr OR andexpr
-    (11) orexpr -> . andexpr
-    (12) andexpr -> . andexpr AND eqexpr
-    (13) andexpr -> . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (8) block -> OPENBLOCK . listcommand CLOSEBLOCK
+    (9) listcommand -> . listcommand command
+    (10) listcommand -> . command
+    (11) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
+    (12) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
+    (13) command -> . RETURN IDENTIFIER orexpr SEMICOLLON
+    (14) command -> . IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+    (15) command -> . IDENTIFIER LPAR RPAR SEMICOLLON
+    (16) command -> . block
+    (17) command -> . WHILE LPAR orexpr RPAR command
+    (18) command -> . IF LPAR orexpr RPAR command
+    (19) command -> . IF LPAR orexpr RPAR command ELSE command
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    IDENTIFIER      shift and go to state 19
+    PRINT           shift and go to state 20
+    RETURN          shift and go to state 21
+    WHILE           shift and go to state 23
+    IF              shift and go to state 24
+    OPENBLOCK       shift and go to state 14
 
-    orexpr                         shift and go to state 34
-    andexpr                        shift and go to state 18
-    eqexpr                         shift and go to state 19
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
+    listcommand                    shift and go to state 17
+    command                        shift and go to state 18
+    block                          shift and go to state 22
 
 state 15
 
-    (8) command -> IF LPAR . orexpr RPAR command
-    (9) command -> IF LPAR . orexpr RPAR command ELSE command
-    (10) orexpr -> . orexpr OR andexpr
-    (11) orexpr -> . andexpr
-    (12) andexpr -> . andexpr AND eqexpr
-    (13) andexpr -> . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (6) funcparams -> IDENTIFIER COMMA funcparams .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    RPAR            reduce using rule 6 (funcparams -> IDENTIFIER COMMA funcparams .)
 
-    orexpr                         shift and go to state 35
-    andexpr                        shift and go to state 18
-    eqexpr                         shift and go to state 19
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 16
 
-    (29) factor -> IDENTIFIER .
+    (4) funcdefblock -> FUNCTION IDENTIFIER LPAR funcparams RPAR block .
 
-    MULT            reduce using rule 29 (factor -> IDENTIFIER .)
-    DIV             reduce using rule 29 (factor -> IDENTIFIER .)
-    PLUS            reduce using rule 29 (factor -> IDENTIFIER .)
-    MINUS           reduce using rule 29 (factor -> IDENTIFIER .)
-    BIGGER          reduce using rule 29 (factor -> IDENTIFIER .)
-    SMALLER         reduce using rule 29 (factor -> IDENTIFIER .)
-    BIGGEREQUAL     reduce using rule 29 (factor -> IDENTIFIER .)
-    SMALLEREQUAL    reduce using rule 29 (factor -> IDENTIFIER .)
-    EQUAL           reduce using rule 29 (factor -> IDENTIFIER .)
-    NOTEQUAL        reduce using rule 29 (factor -> IDENTIFIER .)
-    AND             reduce using rule 29 (factor -> IDENTIFIER .)
-    SEMICOLLON      reduce using rule 29 (factor -> IDENTIFIER .)
-    OR              reduce using rule 29 (factor -> IDENTIFIER .)
-    RPAR            reduce using rule 29 (factor -> IDENTIFIER .)
+    FUNCTION        reduce using rule 4 (funcdefblock -> FUNCTION IDENTIFIER LPAR funcparams RPAR block .)
+    $end            reduce using rule 4 (funcdefblock -> FUNCTION IDENTIFIER LPAR funcparams RPAR block .)
 
 
 state 17
 
-    (4) command -> IDENTIFIER ATTRIB orexpr . SEMICOLLON
-    (10) orexpr -> orexpr . OR andexpr
+    (8) block -> OPENBLOCK listcommand . CLOSEBLOCK
+    (9) listcommand -> listcommand . command
+    (11) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
+    (12) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
+    (13) command -> . RETURN IDENTIFIER orexpr SEMICOLLON
+    (14) command -> . IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+    (15) command -> . IDENTIFIER LPAR RPAR SEMICOLLON
+    (16) command -> . block
+    (17) command -> . WHILE LPAR orexpr RPAR command
+    (18) command -> . IF LPAR orexpr RPAR command
+    (19) command -> . IF LPAR orexpr RPAR command ELSE command
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
 
-    SEMICOLLON      shift and go to state 36
-    OR              shift and go to state 37
+    CLOSEBLOCK      shift and go to state 25
+    IDENTIFIER      shift and go to state 19
+    PRINT           shift and go to state 20
+    RETURN          shift and go to state 21
+    WHILE           shift and go to state 23
+    IF              shift and go to state 24
+    OPENBLOCK       shift and go to state 14
 
+    command                        shift and go to state 26
+    block                          shift and go to state 22
 
 state 18
 
-    (11) orexpr -> andexpr .
-    (12) andexpr -> andexpr . AND eqexpr
+    (10) listcommand -> command .
 
-    SEMICOLLON      reduce using rule 11 (orexpr -> andexpr .)
-    OR              reduce using rule 11 (orexpr -> andexpr .)
-    RPAR            reduce using rule 11 (orexpr -> andexpr .)
-    AND             shift and go to state 38
+    CLOSEBLOCK      reduce using rule 10 (listcommand -> command .)
+    IDENTIFIER      reduce using rule 10 (listcommand -> command .)
+    PRINT           reduce using rule 10 (listcommand -> command .)
+    RETURN          reduce using rule 10 (listcommand -> command .)
+    WHILE           reduce using rule 10 (listcommand -> command .)
+    IF              reduce using rule 10 (listcommand -> command .)
+    OPENBLOCK       reduce using rule 10 (listcommand -> command .)
 
 
 state 19
 
-    (13) andexpr -> eqexpr .
-    (14) eqexpr -> eqexpr . EQUAL relexpr
-    (15) eqexpr -> eqexpr . NOTEQUAL relexpr
+    (11) command -> IDENTIFIER . ATTRIB orexpr SEMICOLLON
+    (14) command -> IDENTIFIER . LPAR inputparams RPAR SEMICOLLON
+    (15) command -> IDENTIFIER . LPAR RPAR SEMICOLLON
 
-    AND             reduce using rule 13 (andexpr -> eqexpr .)
-    SEMICOLLON      reduce using rule 13 (andexpr -> eqexpr .)
-    OR              reduce using rule 13 (andexpr -> eqexpr .)
-    RPAR            reduce using rule 13 (andexpr -> eqexpr .)
-    EQUAL           shift and go to state 39
-    NOTEQUAL        shift and go to state 40
+    ATTRIB          shift and go to state 27
+    LPAR            shift and go to state 28
 
 
 state 20
 
-    (16) eqexpr -> relexpr .
-    (17) relexpr -> relexpr . BIGGER expression
-    (18) relexpr -> relexpr . SMALLER expression
-    (19) relexpr -> relexpr . BIGGEREQUAL expression
-    (20) relexpr -> relexpr . SMALLEREQUAL expression
+    (12) command -> PRINT . LPAR orexpr RPAR SEMICOLLON
 
-    EQUAL           reduce using rule 16 (eqexpr -> relexpr .)
-    NOTEQUAL        reduce using rule 16 (eqexpr -> relexpr .)
-    AND             reduce using rule 16 (eqexpr -> relexpr .)
-    SEMICOLLON      reduce using rule 16 (eqexpr -> relexpr .)
-    OR              reduce using rule 16 (eqexpr -> relexpr .)
-    RPAR            reduce using rule 16 (eqexpr -> relexpr .)
-    BIGGER          shift and go to state 41
-    SMALLER         shift and go to state 42
-    BIGGEREQUAL     shift and go to state 43
-    SMALLEREQUAL    shift and go to state 44
+    LPAR            shift and go to state 29
 
 
 state 21
 
-    (21) relexpr -> expression .
-    (22) expression -> expression . PLUS term
-    (23) expression -> expression . MINUS term
+    (13) command -> RETURN . IDENTIFIER orexpr SEMICOLLON
 
-    BIGGER          reduce using rule 21 (relexpr -> expression .)
-    SMALLER         reduce using rule 21 (relexpr -> expression .)
-    BIGGEREQUAL     reduce using rule 21 (relexpr -> expression .)
-    SMALLEREQUAL    reduce using rule 21 (relexpr -> expression .)
-    EQUAL           reduce using rule 21 (relexpr -> expression .)
-    NOTEQUAL        reduce using rule 21 (relexpr -> expression .)
-    AND             reduce using rule 21 (relexpr -> expression .)
-    SEMICOLLON      reduce using rule 21 (relexpr -> expression .)
-    OR              reduce using rule 21 (relexpr -> expression .)
-    RPAR            reduce using rule 21 (relexpr -> expression .)
-    PLUS            shift and go to state 45
-    MINUS           shift and go to state 46
+    IDENTIFIER      shift and go to state 30
 
 
 state 22
 
-    (34) factor -> PLUS . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (16) command -> block .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    CLOSEBLOCK      reduce using rule 16 (command -> block .)
+    IDENTIFIER      reduce using rule 16 (command -> block .)
+    PRINT           reduce using rule 16 (command -> block .)
+    RETURN          reduce using rule 16 (command -> block .)
+    WHILE           reduce using rule 16 (command -> block .)
+    IF              reduce using rule 16 (command -> block .)
+    OPENBLOCK       reduce using rule 16 (command -> block .)
+    ELSE            reduce using rule 16 (command -> block .)
 
-    factor                         shift and go to state 47
 
 state 23
 
-    (24) expression -> term .
-    (25) term -> term . MULT factor
-    (26) term -> term . DIV factor
+    (17) command -> WHILE . LPAR orexpr RPAR command
 
-    PLUS            reduce using rule 24 (expression -> term .)
-    MINUS           reduce using rule 24 (expression -> term .)
-    BIGGER          reduce using rule 24 (expression -> term .)
-    SMALLER         reduce using rule 24 (expression -> term .)
-    BIGGEREQUAL     reduce using rule 24 (expression -> term .)
-    SMALLEREQUAL    reduce using rule 24 (expression -> term .)
-    EQUAL           reduce using rule 24 (expression -> term .)
-    NOTEQUAL        reduce using rule 24 (expression -> term .)
-    AND             reduce using rule 24 (expression -> term .)
-    SEMICOLLON      reduce using rule 24 (expression -> term .)
-    OR              reduce using rule 24 (expression -> term .)
-    RPAR            reduce using rule 24 (expression -> term .)
-    MULT            shift and go to state 48
-    DIV             shift and go to state 49
+    LPAR            shift and go to state 31
 
 
 state 24
 
-    (35) factor -> MINUS . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (18) command -> IF . LPAR orexpr RPAR command
+    (19) command -> IF . LPAR orexpr RPAR command ELSE command
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    LPAR            shift and go to state 32
 
-    factor                         shift and go to state 50
 
 state 25
 
-    (27) term -> factor .
+    (8) block -> OPENBLOCK listcommand CLOSEBLOCK .
 
-    MULT            reduce using rule 27 (term -> factor .)
-    DIV             reduce using rule 27 (term -> factor .)
-    PLUS            reduce using rule 27 (term -> factor .)
-    MINUS           reduce using rule 27 (term -> factor .)
-    BIGGER          reduce using rule 27 (term -> factor .)
-    SMALLER         reduce using rule 27 (term -> factor .)
-    BIGGEREQUAL     reduce using rule 27 (term -> factor .)
-    SMALLEREQUAL    reduce using rule 27 (term -> factor .)
-    EQUAL           reduce using rule 27 (term -> factor .)
-    NOTEQUAL        reduce using rule 27 (term -> factor .)
-    AND             reduce using rule 27 (term -> factor .)
-    SEMICOLLON      reduce using rule 27 (term -> factor .)
-    OR              reduce using rule 27 (term -> factor .)
-    RPAR            reduce using rule 27 (term -> factor .)
+    FUNCTION        reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    $end            reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    CLOSEBLOCK      reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    IDENTIFIER      reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    PRINT           reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    RETURN          reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    WHILE           reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    IF              reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    OPENBLOCK       reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
+    ELSE            reduce using rule 8 (block -> OPENBLOCK listcommand CLOSEBLOCK .)
 
 
 state 26
 
-    (28) factor -> NUMBER .
+    (9) listcommand -> listcommand command .
 
-    MULT            reduce using rule 28 (factor -> NUMBER .)
-    DIV             reduce using rule 28 (factor -> NUMBER .)
-    PLUS            reduce using rule 28 (factor -> NUMBER .)
-    MINUS           reduce using rule 28 (factor -> NUMBER .)
-    BIGGER          reduce using rule 28 (factor -> NUMBER .)
-    SMALLER         reduce using rule 28 (factor -> NUMBER .)
-    BIGGEREQUAL     reduce using rule 28 (factor -> NUMBER .)
-    SMALLEREQUAL    reduce using rule 28 (factor -> NUMBER .)
-    EQUAL           reduce using rule 28 (factor -> NUMBER .)
-    NOTEQUAL        reduce using rule 28 (factor -> NUMBER .)
-    AND             reduce using rule 28 (factor -> NUMBER .)
-    SEMICOLLON      reduce using rule 28 (factor -> NUMBER .)
-    OR              reduce using rule 28 (factor -> NUMBER .)
-    RPAR            reduce using rule 28 (factor -> NUMBER .)
+    CLOSEBLOCK      reduce using rule 9 (listcommand -> listcommand command .)
+    IDENTIFIER      reduce using rule 9 (listcommand -> listcommand command .)
+    PRINT           reduce using rule 9 (listcommand -> listcommand command .)
+    RETURN          reduce using rule 9 (listcommand -> listcommand command .)
+    WHILE           reduce using rule 9 (listcommand -> listcommand command .)
+    IF              reduce using rule 9 (listcommand -> listcommand command .)
+    OPENBLOCK       reduce using rule 9 (listcommand -> listcommand command .)
 
 
 state 27
 
-    (30) factor -> TRUE .
+    (11) command -> IDENTIFIER ATTRIB . orexpr SEMICOLLON
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    MULT            reduce using rule 30 (factor -> TRUE .)
-    DIV             reduce using rule 30 (factor -> TRUE .)
-    PLUS            reduce using rule 30 (factor -> TRUE .)
-    MINUS           reduce using rule 30 (factor -> TRUE .)
-    BIGGER          reduce using rule 30 (factor -> TRUE .)
-    SMALLER         reduce using rule 30 (factor -> TRUE .)
-    BIGGEREQUAL     reduce using rule 30 (factor -> TRUE .)
-    SMALLEREQUAL    reduce using rule 30 (factor -> TRUE .)
-    EQUAL           reduce using rule 30 (factor -> TRUE .)
-    NOTEQUAL        reduce using rule 30 (factor -> TRUE .)
-    AND             reduce using rule 30 (factor -> TRUE .)
-    SEMICOLLON      reduce using rule 30 (factor -> TRUE .)
-    OR              reduce using rule 30 (factor -> TRUE .)
-    RPAR            reduce using rule 30 (factor -> TRUE .)
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    orexpr                         shift and go to state 34
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 28
 
-    (31) factor -> FALSE .
+    (14) command -> IDENTIFIER LPAR . inputparams RPAR SEMICOLLON
+    (15) command -> IDENTIFIER LPAR . RPAR SEMICOLLON
+    (50) inputparams -> . orexpr COMMA inputparams
+    (51) inputparams -> . orexpr
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    MULT            reduce using rule 31 (factor -> FALSE .)
-    DIV             reduce using rule 31 (factor -> FALSE .)
-    PLUS            reduce using rule 31 (factor -> FALSE .)
-    MINUS           reduce using rule 31 (factor -> FALSE .)
-    BIGGER          reduce using rule 31 (factor -> FALSE .)
-    SMALLER         reduce using rule 31 (factor -> FALSE .)
-    BIGGEREQUAL     reduce using rule 31 (factor -> FALSE .)
-    SMALLEREQUAL    reduce using rule 31 (factor -> FALSE .)
-    EQUAL           reduce using rule 31 (factor -> FALSE .)
-    NOTEQUAL        reduce using rule 31 (factor -> FALSE .)
-    AND             reduce using rule 31 (factor -> FALSE .)
-    SEMICOLLON      reduce using rule 31 (factor -> FALSE .)
-    OR              reduce using rule 31 (factor -> FALSE .)
-    RPAR            reduce using rule 31 (factor -> FALSE .)
+    RPAR            shift and go to state 51
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    inputparams                    shift and go to state 50
+    orexpr                         shift and go to state 52
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 29
 
-    (32) factor -> STRING .
+    (12) command -> PRINT LPAR . orexpr RPAR SEMICOLLON
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    MULT            reduce using rule 32 (factor -> STRING .)
-    DIV             reduce using rule 32 (factor -> STRING .)
-    PLUS            reduce using rule 32 (factor -> STRING .)
-    MINUS           reduce using rule 32 (factor -> STRING .)
-    BIGGER          reduce using rule 32 (factor -> STRING .)
-    SMALLER         reduce using rule 32 (factor -> STRING .)
-    BIGGEREQUAL     reduce using rule 32 (factor -> STRING .)
-    SMALLEREQUAL    reduce using rule 32 (factor -> STRING .)
-    EQUAL           reduce using rule 32 (factor -> STRING .)
-    NOTEQUAL        reduce using rule 32 (factor -> STRING .)
-    AND             reduce using rule 32 (factor -> STRING .)
-    SEMICOLLON      reduce using rule 32 (factor -> STRING .)
-    OR              reduce using rule 32 (factor -> STRING .)
-    RPAR            reduce using rule 32 (factor -> STRING .)
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    orexpr                         shift and go to state 53
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 30
 
-    (33) factor -> LPAR . orexpr RPAR
-    (10) orexpr -> . orexpr OR andexpr
-    (11) orexpr -> . andexpr
-    (12) andexpr -> . andexpr AND eqexpr
-    (13) andexpr -> . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (13) command -> RETURN IDENTIFIER . orexpr SEMICOLLON
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
-    orexpr                         shift and go to state 51
-    andexpr                        shift and go to state 18
-    eqexpr                         shift and go to state 19
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
+    orexpr                         shift and go to state 54
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 31
 
-    (36) factor -> NOT . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (17) command -> WHILE LPAR . orexpr RPAR command
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
-    factor                         shift and go to state 52
+    orexpr                         shift and go to state 55
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 32
 
-    (37) factor -> INPUT . LPAR RPAR
+    (18) command -> IF LPAR . orexpr RPAR command
+    (19) command -> IF LPAR . orexpr RPAR command ELSE command
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    LPAR            shift and go to state 53
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    orexpr                         shift and go to state 56
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 33
 
-    (5) command -> PRINT LPAR orexpr . RPAR SEMICOLLON
-    (10) orexpr -> orexpr . OR andexpr
+    (39) factor -> IDENTIFIER .
+    (40) factor -> IDENTIFIER . LPAR inputparams RPAR
+    (41) factor -> IDENTIFIER . LPAR RPAR
 
-    RPAR            shift and go to state 54
-    OR              shift and go to state 37
+    MULT            reduce using rule 39 (factor -> IDENTIFIER .)
+    DIV             reduce using rule 39 (factor -> IDENTIFIER .)
+    PLUS            reduce using rule 39 (factor -> IDENTIFIER .)
+    MINUS           reduce using rule 39 (factor -> IDENTIFIER .)
+    BIGGER          reduce using rule 39 (factor -> IDENTIFIER .)
+    SMALLER         reduce using rule 39 (factor -> IDENTIFIER .)
+    BIGGEREQUAL     reduce using rule 39 (factor -> IDENTIFIER .)
+    SMALLEREQUAL    reduce using rule 39 (factor -> IDENTIFIER .)
+    EQUAL           reduce using rule 39 (factor -> IDENTIFIER .)
+    NOTEQUAL        reduce using rule 39 (factor -> IDENTIFIER .)
+    AND             reduce using rule 39 (factor -> IDENTIFIER .)
+    SEMICOLLON      reduce using rule 39 (factor -> IDENTIFIER .)
+    OR              reduce using rule 39 (factor -> IDENTIFIER .)
+    COMMA           reduce using rule 39 (factor -> IDENTIFIER .)
+    RPAR            reduce using rule 39 (factor -> IDENTIFIER .)
+    LPAR            shift and go to state 57
 
 
 state 34
 
-    (7) command -> WHILE LPAR orexpr . RPAR command
-    (10) orexpr -> orexpr . OR andexpr
+    (11) command -> IDENTIFIER ATTRIB orexpr . SEMICOLLON
+    (20) orexpr -> orexpr . OR andexpr
 
-    RPAR            shift and go to state 55
-    OR              shift and go to state 37
+    SEMICOLLON      shift and go to state 58
+    OR              shift and go to state 59
 
 
 state 35
 
-    (8) command -> IF LPAR orexpr . RPAR command
-    (9) command -> IF LPAR orexpr . RPAR command ELSE command
-    (10) orexpr -> orexpr . OR andexpr
+    (21) orexpr -> andexpr .
+    (22) andexpr -> andexpr . AND eqexpr
 
-    RPAR            shift and go to state 56
-    OR              shift and go to state 37
+    SEMICOLLON      reduce using rule 21 (orexpr -> andexpr .)
+    OR              reduce using rule 21 (orexpr -> andexpr .)
+    COMMA           reduce using rule 21 (orexpr -> andexpr .)
+    RPAR            reduce using rule 21 (orexpr -> andexpr .)
+    AND             shift and go to state 60
 
 
 state 36
 
-    (4) command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .
+    (23) andexpr -> eqexpr .
+    (24) eqexpr -> eqexpr . EQUAL relexpr
+    (25) eqexpr -> eqexpr . NOTEQUAL relexpr
 
-    CLOSEBLOCK      reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
-    IDENTIFIER      reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
-    PRINT           reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
-    WHILE           reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
-    IF              reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
-    OPENBLOCK       reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
-    ELSE            reduce using rule 4 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    AND             reduce using rule 23 (andexpr -> eqexpr .)
+    SEMICOLLON      reduce using rule 23 (andexpr -> eqexpr .)
+    OR              reduce using rule 23 (andexpr -> eqexpr .)
+    COMMA           reduce using rule 23 (andexpr -> eqexpr .)
+    RPAR            reduce using rule 23 (andexpr -> eqexpr .)
+    EQUAL           shift and go to state 61
+    NOTEQUAL        shift and go to state 62
 
 
 state 37
 
-    (10) orexpr -> orexpr OR . andexpr
-    (12) andexpr -> . andexpr AND eqexpr
-    (13) andexpr -> . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (26) eqexpr -> relexpr .
+    (27) relexpr -> relexpr . BIGGER expression
+    (28) relexpr -> relexpr . SMALLER expression
+    (29) relexpr -> relexpr . BIGGEREQUAL expression
+    (30) relexpr -> relexpr . SMALLEREQUAL expression
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    EQUAL           reduce using rule 26 (eqexpr -> relexpr .)
+    NOTEQUAL        reduce using rule 26 (eqexpr -> relexpr .)
+    AND             reduce using rule 26 (eqexpr -> relexpr .)
+    SEMICOLLON      reduce using rule 26 (eqexpr -> relexpr .)
+    OR              reduce using rule 26 (eqexpr -> relexpr .)
+    COMMA           reduce using rule 26 (eqexpr -> relexpr .)
+    RPAR            reduce using rule 26 (eqexpr -> relexpr .)
+    BIGGER          shift and go to state 63
+    SMALLER         shift and go to state 64
+    BIGGEREQUAL     shift and go to state 65
+    SMALLEREQUAL    shift and go to state 66
 
-    andexpr                        shift and go to state 57
-    eqexpr                         shift and go to state 19
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 38
 
-    (12) andexpr -> andexpr AND . eqexpr
-    (14) eqexpr -> . eqexpr EQUAL relexpr
-    (15) eqexpr -> . eqexpr NOTEQUAL relexpr
-    (16) eqexpr -> . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (31) relexpr -> expression .
+    (32) expression -> expression . PLUS term
+    (33) expression -> expression . MINUS term
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    BIGGER          reduce using rule 31 (relexpr -> expression .)
+    SMALLER         reduce using rule 31 (relexpr -> expression .)
+    BIGGEREQUAL     reduce using rule 31 (relexpr -> expression .)
+    SMALLEREQUAL    reduce using rule 31 (relexpr -> expression .)
+    EQUAL           reduce using rule 31 (relexpr -> expression .)
+    NOTEQUAL        reduce using rule 31 (relexpr -> expression .)
+    AND             reduce using rule 31 (relexpr -> expression .)
+    SEMICOLLON      reduce using rule 31 (relexpr -> expression .)
+    OR              reduce using rule 31 (relexpr -> expression .)
+    COMMA           reduce using rule 31 (relexpr -> expression .)
+    RPAR            reduce using rule 31 (relexpr -> expression .)
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
 
-    eqexpr                         shift and go to state 58
-    relexpr                        shift and go to state 20
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 39
 
-    (14) eqexpr -> eqexpr EQUAL . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (46) factor -> PLUS . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
-    relexpr                        shift and go to state 59
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
+    factor                         shift and go to state 69
 
 state 40
 
-    (15) eqexpr -> eqexpr NOTEQUAL . relexpr
-    (17) relexpr -> . relexpr BIGGER expression
-    (18) relexpr -> . relexpr SMALLER expression
-    (19) relexpr -> . relexpr BIGGEREQUAL expression
-    (20) relexpr -> . relexpr SMALLEREQUAL expression
-    (21) relexpr -> . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (34) expression -> term .
+    (35) term -> term . MULT factor
+    (36) term -> term . DIV factor
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    PLUS            reduce using rule 34 (expression -> term .)
+    MINUS           reduce using rule 34 (expression -> term .)
+    BIGGER          reduce using rule 34 (expression -> term .)
+    SMALLER         reduce using rule 34 (expression -> term .)
+    BIGGEREQUAL     reduce using rule 34 (expression -> term .)
+    SMALLEREQUAL    reduce using rule 34 (expression -> term .)
+    EQUAL           reduce using rule 34 (expression -> term .)
+    NOTEQUAL        reduce using rule 34 (expression -> term .)
+    AND             reduce using rule 34 (expression -> term .)
+    SEMICOLLON      reduce using rule 34 (expression -> term .)
+    OR              reduce using rule 34 (expression -> term .)
+    COMMA           reduce using rule 34 (expression -> term .)
+    RPAR            reduce using rule 34 (expression -> term .)
+    MULT            shift and go to state 70
+    DIV             shift and go to state 71
 
-    relexpr                        shift and go to state 60
-    expression                     shift and go to state 21
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 41
 
-    (17) relexpr -> relexpr BIGGER . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (47) factor -> MINUS . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
-    expression                     shift and go to state 61
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
+    factor                         shift and go to state 72
 
 state 42
 
-    (18) relexpr -> relexpr SMALLER . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (37) term -> factor .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    MULT            reduce using rule 37 (term -> factor .)
+    DIV             reduce using rule 37 (term -> factor .)
+    PLUS            reduce using rule 37 (term -> factor .)
+    MINUS           reduce using rule 37 (term -> factor .)
+    BIGGER          reduce using rule 37 (term -> factor .)
+    SMALLER         reduce using rule 37 (term -> factor .)
+    BIGGEREQUAL     reduce using rule 37 (term -> factor .)
+    SMALLEREQUAL    reduce using rule 37 (term -> factor .)
+    EQUAL           reduce using rule 37 (term -> factor .)
+    NOTEQUAL        reduce using rule 37 (term -> factor .)
+    AND             reduce using rule 37 (term -> factor .)
+    SEMICOLLON      reduce using rule 37 (term -> factor .)
+    OR              reduce using rule 37 (term -> factor .)
+    COMMA           reduce using rule 37 (term -> factor .)
+    RPAR            reduce using rule 37 (term -> factor .)
 
-    expression                     shift and go to state 62
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 43
 
-    (19) relexpr -> relexpr BIGGEREQUAL . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (38) factor -> NUMBER .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    MULT            reduce using rule 38 (factor -> NUMBER .)
+    DIV             reduce using rule 38 (factor -> NUMBER .)
+    PLUS            reduce using rule 38 (factor -> NUMBER .)
+    MINUS           reduce using rule 38 (factor -> NUMBER .)
+    BIGGER          reduce using rule 38 (factor -> NUMBER .)
+    SMALLER         reduce using rule 38 (factor -> NUMBER .)
+    BIGGEREQUAL     reduce using rule 38 (factor -> NUMBER .)
+    SMALLEREQUAL    reduce using rule 38 (factor -> NUMBER .)
+    EQUAL           reduce using rule 38 (factor -> NUMBER .)
+    NOTEQUAL        reduce using rule 38 (factor -> NUMBER .)
+    AND             reduce using rule 38 (factor -> NUMBER .)
+    SEMICOLLON      reduce using rule 38 (factor -> NUMBER .)
+    OR              reduce using rule 38 (factor -> NUMBER .)
+    COMMA           reduce using rule 38 (factor -> NUMBER .)
+    RPAR            reduce using rule 38 (factor -> NUMBER .)
 
-    expression                     shift and go to state 63
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
 
 state 44
 
-    (20) relexpr -> relexpr SMALLEREQUAL . expression
-    (22) expression -> . expression PLUS term
-    (23) expression -> . expression MINUS term
-    (24) expression -> . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (45) factor -> LPAR . orexpr RPAR
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
-    expression                     shift and go to state 64
-    term                           shift and go to state 23
-    factor                         shift and go to state 25
+    orexpr                         shift and go to state 73
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 45
 
-    (22) expression -> expression PLUS . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (42) factor -> TRUE .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    MULT            reduce using rule 42 (factor -> TRUE .)
+    DIV             reduce using rule 42 (factor -> TRUE .)
+    PLUS            reduce using rule 42 (factor -> TRUE .)
+    MINUS           reduce using rule 42 (factor -> TRUE .)
+    BIGGER          reduce using rule 42 (factor -> TRUE .)
+    SMALLER         reduce using rule 42 (factor -> TRUE .)
+    BIGGEREQUAL     reduce using rule 42 (factor -> TRUE .)
+    SMALLEREQUAL    reduce using rule 42 (factor -> TRUE .)
+    EQUAL           reduce using rule 42 (factor -> TRUE .)
+    NOTEQUAL        reduce using rule 42 (factor -> TRUE .)
+    AND             reduce using rule 42 (factor -> TRUE .)
+    SEMICOLLON      reduce using rule 42 (factor -> TRUE .)
+    OR              reduce using rule 42 (factor -> TRUE .)
+    COMMA           reduce using rule 42 (factor -> TRUE .)
+    RPAR            reduce using rule 42 (factor -> TRUE .)
 
-    term                           shift and go to state 65
-    factor                         shift and go to state 25
 
 state 46
 
-    (23) expression -> expression MINUS . term
-    (25) term -> . term MULT factor
-    (26) term -> . term DIV factor
-    (27) term -> . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (43) factor -> FALSE .
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    MULT            reduce using rule 43 (factor -> FALSE .)
+    DIV             reduce using rule 43 (factor -> FALSE .)
+    PLUS            reduce using rule 43 (factor -> FALSE .)
+    MINUS           reduce using rule 43 (factor -> FALSE .)
+    BIGGER          reduce using rule 43 (factor -> FALSE .)
+    SMALLER         reduce using rule 43 (factor -> FALSE .)
+    BIGGEREQUAL     reduce using rule 43 (factor -> FALSE .)
+    SMALLEREQUAL    reduce using rule 43 (factor -> FALSE .)
+    EQUAL           reduce using rule 43 (factor -> FALSE .)
+    NOTEQUAL        reduce using rule 43 (factor -> FALSE .)
+    AND             reduce using rule 43 (factor -> FALSE .)
+    SEMICOLLON      reduce using rule 43 (factor -> FALSE .)
+    OR              reduce using rule 43 (factor -> FALSE .)
+    COMMA           reduce using rule 43 (factor -> FALSE .)
+    RPAR            reduce using rule 43 (factor -> FALSE .)
 
-    term                           shift and go to state 66
-    factor                         shift and go to state 25
 
 state 47
 
-    (34) factor -> PLUS factor .
+    (44) factor -> STRING .
 
-    MULT            reduce using rule 34 (factor -> PLUS factor .)
-    DIV             reduce using rule 34 (factor -> PLUS factor .)
-    PLUS            reduce using rule 34 (factor -> PLUS factor .)
-    MINUS           reduce using rule 34 (factor -> PLUS factor .)
-    BIGGER          reduce using rule 34 (factor -> PLUS factor .)
-    SMALLER         reduce using rule 34 (factor -> PLUS factor .)
-    BIGGEREQUAL     reduce using rule 34 (factor -> PLUS factor .)
-    SMALLEREQUAL    reduce using rule 34 (factor -> PLUS factor .)
-    EQUAL           reduce using rule 34 (factor -> PLUS factor .)
-    NOTEQUAL        reduce using rule 34 (factor -> PLUS factor .)
-    AND             reduce using rule 34 (factor -> PLUS factor .)
-    SEMICOLLON      reduce using rule 34 (factor -> PLUS factor .)
-    OR              reduce using rule 34 (factor -> PLUS factor .)
-    RPAR            reduce using rule 34 (factor -> PLUS factor .)
+    MULT            reduce using rule 44 (factor -> STRING .)
+    DIV             reduce using rule 44 (factor -> STRING .)
+    PLUS            reduce using rule 44 (factor -> STRING .)
+    MINUS           reduce using rule 44 (factor -> STRING .)
+    BIGGER          reduce using rule 44 (factor -> STRING .)
+    SMALLER         reduce using rule 44 (factor -> STRING .)
+    BIGGEREQUAL     reduce using rule 44 (factor -> STRING .)
+    SMALLEREQUAL    reduce using rule 44 (factor -> STRING .)
+    EQUAL           reduce using rule 44 (factor -> STRING .)
+    NOTEQUAL        reduce using rule 44 (factor -> STRING .)
+    AND             reduce using rule 44 (factor -> STRING .)
+    SEMICOLLON      reduce using rule 44 (factor -> STRING .)
+    OR              reduce using rule 44 (factor -> STRING .)
+    COMMA           reduce using rule 44 (factor -> STRING .)
+    RPAR            reduce using rule 44 (factor -> STRING .)
 
 
 state 48
 
-    (25) term -> term MULT . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (48) factor -> NOT . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
-    factor                         shift and go to state 67
+    factor                         shift and go to state 74
 
 state 49
 
-    (26) term -> term DIV . factor
-    (28) factor -> . NUMBER
-    (29) factor -> . IDENTIFIER
-    (30) factor -> . TRUE
-    (31) factor -> . FALSE
-    (32) factor -> . STRING
-    (33) factor -> . LPAR orexpr RPAR
-    (34) factor -> . PLUS factor
-    (35) factor -> . MINUS factor
-    (36) factor -> . NOT factor
-    (37) factor -> . INPUT LPAR RPAR
+    (49) factor -> INPUT . LPAR RPAR
 
-    NUMBER          shift and go to state 26
-    IDENTIFIER      shift and go to state 16
-    TRUE            shift and go to state 27
-    FALSE           shift and go to state 28
-    STRING          shift and go to state 29
-    LPAR            shift and go to state 30
-    PLUS            shift and go to state 22
-    MINUS           shift and go to state 24
-    NOT             shift and go to state 31
-    INPUT           shift and go to state 32
+    LPAR            shift and go to state 75
 
-    factor                         shift and go to state 68
 
 state 50
 
-    (35) factor -> MINUS factor .
+    (14) command -> IDENTIFIER LPAR inputparams . RPAR SEMICOLLON
 
-    MULT            reduce using rule 35 (factor -> MINUS factor .)
-    DIV             reduce using rule 35 (factor -> MINUS factor .)
-    PLUS            reduce using rule 35 (factor -> MINUS factor .)
-    MINUS           reduce using rule 35 (factor -> MINUS factor .)
-    BIGGER          reduce using rule 35 (factor -> MINUS factor .)
-    SMALLER         reduce using rule 35 (factor -> MINUS factor .)
-    BIGGEREQUAL     reduce using rule 35 (factor -> MINUS factor .)
-    SMALLEREQUAL    reduce using rule 35 (factor -> MINUS factor .)
-    EQUAL           reduce using rule 35 (factor -> MINUS factor .)
-    NOTEQUAL        reduce using rule 35 (factor -> MINUS factor .)
-    AND             reduce using rule 35 (factor -> MINUS factor .)
-    SEMICOLLON      reduce using rule 35 (factor -> MINUS factor .)
-    OR              reduce using rule 35 (factor -> MINUS factor .)
-    RPAR            reduce using rule 35 (factor -> MINUS factor .)
+    RPAR            shift and go to state 76
 
 
 state 51
 
-    (33) factor -> LPAR orexpr . RPAR
-    (10) orexpr -> orexpr . OR andexpr
+    (15) command -> IDENTIFIER LPAR RPAR . SEMICOLLON
 
-    RPAR            shift and go to state 69
-    OR              shift and go to state 37
+    SEMICOLLON      shift and go to state 77
 
 
 state 52
 
-    (36) factor -> NOT factor .
+    (50) inputparams -> orexpr . COMMA inputparams
+    (51) inputparams -> orexpr .
+    (20) orexpr -> orexpr . OR andexpr
 
-    MULT            reduce using rule 36 (factor -> NOT factor .)
-    DIV             reduce using rule 36 (factor -> NOT factor .)
-    PLUS            reduce using rule 36 (factor -> NOT factor .)
-    MINUS           reduce using rule 36 (factor -> NOT factor .)
-    BIGGER          reduce using rule 36 (factor -> NOT factor .)
-    SMALLER         reduce using rule 36 (factor -> NOT factor .)
-    BIGGEREQUAL     reduce using rule 36 (factor -> NOT factor .)
-    SMALLEREQUAL    reduce using rule 36 (factor -> NOT factor .)
-    EQUAL           reduce using rule 36 (factor -> NOT factor .)
-    NOTEQUAL        reduce using rule 36 (factor -> NOT factor .)
-    AND             reduce using rule 36 (factor -> NOT factor .)
-    SEMICOLLON      reduce using rule 36 (factor -> NOT factor .)
-    OR              reduce using rule 36 (factor -> NOT factor .)
-    RPAR            reduce using rule 36 (factor -> NOT factor .)
+    COMMA           shift and go to state 78
+    RPAR            reduce using rule 51 (inputparams -> orexpr .)
+    OR              shift and go to state 59
 
 
 state 53
 
-    (37) factor -> INPUT LPAR . RPAR
+    (12) command -> PRINT LPAR orexpr . RPAR SEMICOLLON
+    (20) orexpr -> orexpr . OR andexpr
 
-    RPAR            shift and go to state 70
+    RPAR            shift and go to state 79
+    OR              shift and go to state 59
 
 
 state 54
 
-    (5) command -> PRINT LPAR orexpr RPAR . SEMICOLLON
+    (13) command -> RETURN IDENTIFIER orexpr . SEMICOLLON
+    (20) orexpr -> orexpr . OR andexpr
 
-    SEMICOLLON      shift and go to state 71
+    SEMICOLLON      shift and go to state 80
+    OR              shift and go to state 59
 
 
 state 55
 
-    (7) command -> WHILE LPAR orexpr RPAR . command
-    (4) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
-    (5) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
-    (6) command -> . block
-    (7) command -> . WHILE LPAR orexpr RPAR command
-    (8) command -> . IF LPAR orexpr RPAR command
-    (9) command -> . IF LPAR orexpr RPAR command ELSE command
-    (1) block -> . OPENBLOCK listcommand CLOSEBLOCK
+    (17) command -> WHILE LPAR orexpr . RPAR command
+    (20) orexpr -> orexpr . OR andexpr
 
-    IDENTIFIER      shift and go to state 5
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    OPENBLOCK       shift and go to state 2
+    RPAR            shift and go to state 81
+    OR              shift and go to state 59
 
-    command                        shift and go to state 72
-    block                          shift and go to state 7
 
 state 56
 
-    (8) command -> IF LPAR orexpr RPAR . command
-    (9) command -> IF LPAR orexpr RPAR . command ELSE command
-    (4) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
-    (5) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
-    (6) command -> . block
-    (7) command -> . WHILE LPAR orexpr RPAR command
-    (8) command -> . IF LPAR orexpr RPAR command
-    (9) command -> . IF LPAR orexpr RPAR command ELSE command
-    (1) block -> . OPENBLOCK listcommand CLOSEBLOCK
+    (18) command -> IF LPAR orexpr . RPAR command
+    (19) command -> IF LPAR orexpr . RPAR command ELSE command
+    (20) orexpr -> orexpr . OR andexpr
 
-    IDENTIFIER      shift and go to state 5
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    OPENBLOCK       shift and go to state 2
+    RPAR            shift and go to state 82
+    OR              shift and go to state 59
 
-    command                        shift and go to state 73
-    block                          shift and go to state 7
 
 state 57
 
-    (10) orexpr -> orexpr OR andexpr .
-    (12) andexpr -> andexpr . AND eqexpr
+    (40) factor -> IDENTIFIER LPAR . inputparams RPAR
+    (41) factor -> IDENTIFIER LPAR . RPAR
+    (50) inputparams -> . orexpr COMMA inputparams
+    (51) inputparams -> . orexpr
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    SEMICOLLON      reduce using rule 10 (orexpr -> orexpr OR andexpr .)
-    OR              reduce using rule 10 (orexpr -> orexpr OR andexpr .)
-    RPAR            reduce using rule 10 (orexpr -> orexpr OR andexpr .)
-    AND             shift and go to state 38
+    RPAR            shift and go to state 84
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    inputparams                    shift and go to state 83
+    orexpr                         shift and go to state 52
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 58
 
-    (12) andexpr -> andexpr AND eqexpr .
-    (14) eqexpr -> eqexpr . EQUAL relexpr
-    (15) eqexpr -> eqexpr . NOTEQUAL relexpr
+    (11) command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .
 
-    AND             reduce using rule 12 (andexpr -> andexpr AND eqexpr .)
-    SEMICOLLON      reduce using rule 12 (andexpr -> andexpr AND eqexpr .)
-    OR              reduce using rule 12 (andexpr -> andexpr AND eqexpr .)
-    RPAR            reduce using rule 12 (andexpr -> andexpr AND eqexpr .)
-    EQUAL           shift and go to state 39
-    NOTEQUAL        shift and go to state 40
+    CLOSEBLOCK      reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    IDENTIFIER      reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    PRINT           reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    RETURN          reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    WHILE           reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    IF              reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    OPENBLOCK       reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
+    ELSE            reduce using rule 11 (command -> IDENTIFIER ATTRIB orexpr SEMICOLLON .)
 
 
 state 59
 
-    (14) eqexpr -> eqexpr EQUAL relexpr .
-    (17) relexpr -> relexpr . BIGGER expression
-    (18) relexpr -> relexpr . SMALLER expression
-    (19) relexpr -> relexpr . BIGGEREQUAL expression
-    (20) relexpr -> relexpr . SMALLEREQUAL expression
+    (20) orexpr -> orexpr OR . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    EQUAL           reduce using rule 14 (eqexpr -> eqexpr EQUAL relexpr .)
-    NOTEQUAL        reduce using rule 14 (eqexpr -> eqexpr EQUAL relexpr .)
-    AND             reduce using rule 14 (eqexpr -> eqexpr EQUAL relexpr .)
-    SEMICOLLON      reduce using rule 14 (eqexpr -> eqexpr EQUAL relexpr .)
-    OR              reduce using rule 14 (eqexpr -> eqexpr EQUAL relexpr .)
-    RPAR            reduce using rule 14 (eqexpr -> eqexpr EQUAL relexpr .)
-    BIGGER          shift and go to state 41
-    SMALLER         shift and go to state 42
-    BIGGEREQUAL     shift and go to state 43
-    SMALLEREQUAL    shift and go to state 44
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    andexpr                        shift and go to state 85
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 60
 
-    (15) eqexpr -> eqexpr NOTEQUAL relexpr .
-    (17) relexpr -> relexpr . BIGGER expression
-    (18) relexpr -> relexpr . SMALLER expression
-    (19) relexpr -> relexpr . BIGGEREQUAL expression
-    (20) relexpr -> relexpr . SMALLEREQUAL expression
+    (22) andexpr -> andexpr AND . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    EQUAL           reduce using rule 15 (eqexpr -> eqexpr NOTEQUAL relexpr .)
-    NOTEQUAL        reduce using rule 15 (eqexpr -> eqexpr NOTEQUAL relexpr .)
-    AND             reduce using rule 15 (eqexpr -> eqexpr NOTEQUAL relexpr .)
-    SEMICOLLON      reduce using rule 15 (eqexpr -> eqexpr NOTEQUAL relexpr .)
-    OR              reduce using rule 15 (eqexpr -> eqexpr NOTEQUAL relexpr .)
-    RPAR            reduce using rule 15 (eqexpr -> eqexpr NOTEQUAL relexpr .)
-    BIGGER          shift and go to state 41
-    SMALLER         shift and go to state 42
-    BIGGEREQUAL     shift and go to state 43
-    SMALLEREQUAL    shift and go to state 44
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    eqexpr                         shift and go to state 86
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 61
 
-    (17) relexpr -> relexpr BIGGER expression .
-    (22) expression -> expression . PLUS term
-    (23) expression -> expression . MINUS term
+    (24) eqexpr -> eqexpr EQUAL . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    BIGGER          reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    SMALLER         reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    BIGGEREQUAL     reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    SMALLEREQUAL    reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    EQUAL           reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    NOTEQUAL        reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    AND             reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    SEMICOLLON      reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    OR              reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    RPAR            reduce using rule 17 (relexpr -> relexpr BIGGER expression .)
-    PLUS            shift and go to state 45
-    MINUS           shift and go to state 46
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    relexpr                        shift and go to state 87
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 62
 
-    (18) relexpr -> relexpr SMALLER expression .
-    (22) expression -> expression . PLUS term
-    (23) expression -> expression . MINUS term
+    (25) eqexpr -> eqexpr NOTEQUAL . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    BIGGER          reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    SMALLER         reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    BIGGEREQUAL     reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    SMALLEREQUAL    reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    EQUAL           reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    NOTEQUAL        reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    AND             reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    SEMICOLLON      reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    OR              reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    RPAR            reduce using rule 18 (relexpr -> relexpr SMALLER expression .)
-    PLUS            shift and go to state 45
-    MINUS           shift and go to state 46
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    relexpr                        shift and go to state 88
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 63
 
-    (19) relexpr -> relexpr BIGGEREQUAL expression .
-    (22) expression -> expression . PLUS term
-    (23) expression -> expression . MINUS term
+    (27) relexpr -> relexpr BIGGER . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    BIGGER          reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    SMALLER         reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    BIGGEREQUAL     reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    SMALLEREQUAL    reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    EQUAL           reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    NOTEQUAL        reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    AND             reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    SEMICOLLON      reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    OR              reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    RPAR            reduce using rule 19 (relexpr -> relexpr BIGGEREQUAL expression .)
-    PLUS            shift and go to state 45
-    MINUS           shift and go to state 46
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    expression                     shift and go to state 89
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 64
 
-    (20) relexpr -> relexpr SMALLEREQUAL expression .
-    (22) expression -> expression . PLUS term
-    (23) expression -> expression . MINUS term
+    (28) relexpr -> relexpr SMALLER . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    BIGGER          reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    SMALLER         reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    BIGGEREQUAL     reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    SMALLEREQUAL    reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    EQUAL           reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    NOTEQUAL        reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    AND             reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    SEMICOLLON      reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    OR              reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    RPAR            reduce using rule 20 (relexpr -> relexpr SMALLEREQUAL expression .)
-    PLUS            shift and go to state 45
-    MINUS           shift and go to state 46
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    expression                     shift and go to state 90
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 65
 
-    (22) expression -> expression PLUS term .
-    (25) term -> term . MULT factor
-    (26) term -> term . DIV factor
+    (29) relexpr -> relexpr BIGGEREQUAL . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    PLUS            reduce using rule 22 (expression -> expression PLUS term .)
-    MINUS           reduce using rule 22 (expression -> expression PLUS term .)
-    BIGGER          reduce using rule 22 (expression -> expression PLUS term .)
-    SMALLER         reduce using rule 22 (expression -> expression PLUS term .)
-    BIGGEREQUAL     reduce using rule 22 (expression -> expression PLUS term .)
-    SMALLEREQUAL    reduce using rule 22 (expression -> expression PLUS term .)
-    EQUAL           reduce using rule 22 (expression -> expression PLUS term .)
-    NOTEQUAL        reduce using rule 22 (expression -> expression PLUS term .)
-    AND             reduce using rule 22 (expression -> expression PLUS term .)
-    SEMICOLLON      reduce using rule 22 (expression -> expression PLUS term .)
-    OR              reduce using rule 22 (expression -> expression PLUS term .)
-    RPAR            reduce using rule 22 (expression -> expression PLUS term .)
-    MULT            shift and go to state 48
-    DIV             shift and go to state 49
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    expression                     shift and go to state 91
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 66
 
-    (23) expression -> expression MINUS term .
-    (25) term -> term . MULT factor
-    (26) term -> term . DIV factor
+    (30) relexpr -> relexpr SMALLEREQUAL . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    PLUS            reduce using rule 23 (expression -> expression MINUS term .)
-    MINUS           reduce using rule 23 (expression -> expression MINUS term .)
-    BIGGER          reduce using rule 23 (expression -> expression MINUS term .)
-    SMALLER         reduce using rule 23 (expression -> expression MINUS term .)
-    BIGGEREQUAL     reduce using rule 23 (expression -> expression MINUS term .)
-    SMALLEREQUAL    reduce using rule 23 (expression -> expression MINUS term .)
-    EQUAL           reduce using rule 23 (expression -> expression MINUS term .)
-    NOTEQUAL        reduce using rule 23 (expression -> expression MINUS term .)
-    AND             reduce using rule 23 (expression -> expression MINUS term .)
-    SEMICOLLON      reduce using rule 23 (expression -> expression MINUS term .)
-    OR              reduce using rule 23 (expression -> expression MINUS term .)
-    RPAR            reduce using rule 23 (expression -> expression MINUS term .)
-    MULT            shift and go to state 48
-    DIV             shift and go to state 49
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    expression                     shift and go to state 92
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
 
 state 67
 
-    (25) term -> term MULT factor .
+    (32) expression -> expression PLUS . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    MULT            reduce using rule 25 (term -> term MULT factor .)
-    DIV             reduce using rule 25 (term -> term MULT factor .)
-    PLUS            reduce using rule 25 (term -> term MULT factor .)
-    MINUS           reduce using rule 25 (term -> term MULT factor .)
-    BIGGER          reduce using rule 25 (term -> term MULT factor .)
-    SMALLER         reduce using rule 25 (term -> term MULT factor .)
-    BIGGEREQUAL     reduce using rule 25 (term -> term MULT factor .)
-    SMALLEREQUAL    reduce using rule 25 (term -> term MULT factor .)
-    EQUAL           reduce using rule 25 (term -> term MULT factor .)
-    NOTEQUAL        reduce using rule 25 (term -> term MULT factor .)
-    AND             reduce using rule 25 (term -> term MULT factor .)
-    SEMICOLLON      reduce using rule 25 (term -> term MULT factor .)
-    OR              reduce using rule 25 (term -> term MULT factor .)
-    RPAR            reduce using rule 25 (term -> term MULT factor .)
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    term                           shift and go to state 93
+    factor                         shift and go to state 42
 
 state 68
 
-    (26) term -> term DIV factor .
+    (33) expression -> expression MINUS . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    MULT            reduce using rule 26 (term -> term DIV factor .)
-    DIV             reduce using rule 26 (term -> term DIV factor .)
-    PLUS            reduce using rule 26 (term -> term DIV factor .)
-    MINUS           reduce using rule 26 (term -> term DIV factor .)
-    BIGGER          reduce using rule 26 (term -> term DIV factor .)
-    SMALLER         reduce using rule 26 (term -> term DIV factor .)
-    BIGGEREQUAL     reduce using rule 26 (term -> term DIV factor .)
-    SMALLEREQUAL    reduce using rule 26 (term -> term DIV factor .)
-    EQUAL           reduce using rule 26 (term -> term DIV factor .)
-    NOTEQUAL        reduce using rule 26 (term -> term DIV factor .)
-    AND             reduce using rule 26 (term -> term DIV factor .)
-    SEMICOLLON      reduce using rule 26 (term -> term DIV factor .)
-    OR              reduce using rule 26 (term -> term DIV factor .)
-    RPAR            reduce using rule 26 (term -> term DIV factor .)
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    term                           shift and go to state 94
+    factor                         shift and go to state 42
 
 state 69
 
-    (33) factor -> LPAR orexpr RPAR .
+    (46) factor -> PLUS factor .
 
-    MULT            reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    DIV             reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    PLUS            reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    MINUS           reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    BIGGER          reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    SMALLER         reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    BIGGEREQUAL     reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    SMALLEREQUAL    reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    EQUAL           reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    NOTEQUAL        reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    AND             reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    SEMICOLLON      reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    OR              reduce using rule 33 (factor -> LPAR orexpr RPAR .)
-    RPAR            reduce using rule 33 (factor -> LPAR orexpr RPAR .)
+    MULT            reduce using rule 46 (factor -> PLUS factor .)
+    DIV             reduce using rule 46 (factor -> PLUS factor .)
+    PLUS            reduce using rule 46 (factor -> PLUS factor .)
+    MINUS           reduce using rule 46 (factor -> PLUS factor .)
+    BIGGER          reduce using rule 46 (factor -> PLUS factor .)
+    SMALLER         reduce using rule 46 (factor -> PLUS factor .)
+    BIGGEREQUAL     reduce using rule 46 (factor -> PLUS factor .)
+    SMALLEREQUAL    reduce using rule 46 (factor -> PLUS factor .)
+    EQUAL           reduce using rule 46 (factor -> PLUS factor .)
+    NOTEQUAL        reduce using rule 46 (factor -> PLUS factor .)
+    AND             reduce using rule 46 (factor -> PLUS factor .)
+    SEMICOLLON      reduce using rule 46 (factor -> PLUS factor .)
+    OR              reduce using rule 46 (factor -> PLUS factor .)
+    COMMA           reduce using rule 46 (factor -> PLUS factor .)
+    RPAR            reduce using rule 46 (factor -> PLUS factor .)
 
 
 state 70
 
-    (37) factor -> INPUT LPAR RPAR .
+    (35) term -> term MULT . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    MULT            reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    DIV             reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    PLUS            reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    MINUS           reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    BIGGER          reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    SMALLER         reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    BIGGEREQUAL     reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    SMALLEREQUAL    reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    EQUAL           reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    NOTEQUAL        reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    AND             reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    SEMICOLLON      reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    OR              reduce using rule 37 (factor -> INPUT LPAR RPAR .)
-    RPAR            reduce using rule 37 (factor -> INPUT LPAR RPAR .)
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    factor                         shift and go to state 95
 
 state 71
 
-    (5) command -> PRINT LPAR orexpr RPAR SEMICOLLON .
+    (36) term -> term DIV . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
 
-    CLOSEBLOCK      reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
-    IDENTIFIER      reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
-    PRINT           reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
-    WHILE           reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
-    IF              reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
-    OPENBLOCK       reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
-    ELSE            reduce using rule 5 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
 
+    factor                         shift and go to state 96
 
 state 72
 
-    (7) command -> WHILE LPAR orexpr RPAR command .
+    (47) factor -> MINUS factor .
 
-    CLOSEBLOCK      reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
-    IDENTIFIER      reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
-    PRINT           reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
-    WHILE           reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
-    IF              reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
-    OPENBLOCK       reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
-    ELSE            reduce using rule 7 (command -> WHILE LPAR orexpr RPAR command .)
+    MULT            reduce using rule 47 (factor -> MINUS factor .)
+    DIV             reduce using rule 47 (factor -> MINUS factor .)
+    PLUS            reduce using rule 47 (factor -> MINUS factor .)
+    MINUS           reduce using rule 47 (factor -> MINUS factor .)
+    BIGGER          reduce using rule 47 (factor -> MINUS factor .)
+    SMALLER         reduce using rule 47 (factor -> MINUS factor .)
+    BIGGEREQUAL     reduce using rule 47 (factor -> MINUS factor .)
+    SMALLEREQUAL    reduce using rule 47 (factor -> MINUS factor .)
+    EQUAL           reduce using rule 47 (factor -> MINUS factor .)
+    NOTEQUAL        reduce using rule 47 (factor -> MINUS factor .)
+    AND             reduce using rule 47 (factor -> MINUS factor .)
+    SEMICOLLON      reduce using rule 47 (factor -> MINUS factor .)
+    OR              reduce using rule 47 (factor -> MINUS factor .)
+    COMMA           reduce using rule 47 (factor -> MINUS factor .)
+    RPAR            reduce using rule 47 (factor -> MINUS factor .)
 
 
 state 73
 
-    (8) command -> IF LPAR orexpr RPAR command .
-    (9) command -> IF LPAR orexpr RPAR command . ELSE command
+    (45) factor -> LPAR orexpr . RPAR
+    (20) orexpr -> orexpr . OR andexpr
 
-  ! shift/reduce conflict for ELSE resolved as shift
-    CLOSEBLOCK      reduce using rule 8 (command -> IF LPAR orexpr RPAR command .)
-    IDENTIFIER      reduce using rule 8 (command -> IF LPAR orexpr RPAR command .)
-    PRINT           reduce using rule 8 (command -> IF LPAR orexpr RPAR command .)
-    WHILE           reduce using rule 8 (command -> IF LPAR orexpr RPAR command .)
-    IF              reduce using rule 8 (command -> IF LPAR orexpr RPAR command .)
-    OPENBLOCK       reduce using rule 8 (command -> IF LPAR orexpr RPAR command .)
-    ELSE            shift and go to state 74
-
-  ! ELSE            [ reduce using rule 8 (command -> IF LPAR orexpr RPAR command .) ]
+    RPAR            shift and go to state 97
+    OR              shift and go to state 59
 
 
 state 74
 
-    (9) command -> IF LPAR orexpr RPAR command ELSE . command
-    (4) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
-    (5) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
-    (6) command -> . block
-    (7) command -> . WHILE LPAR orexpr RPAR command
-    (8) command -> . IF LPAR orexpr RPAR command
-    (9) command -> . IF LPAR orexpr RPAR command ELSE command
-    (1) block -> . OPENBLOCK listcommand CLOSEBLOCK
+    (48) factor -> NOT factor .
 
-    IDENTIFIER      shift and go to state 5
-    PRINT           shift and go to state 6
-    WHILE           shift and go to state 8
-    IF              shift and go to state 9
-    OPENBLOCK       shift and go to state 2
+    MULT            reduce using rule 48 (factor -> NOT factor .)
+    DIV             reduce using rule 48 (factor -> NOT factor .)
+    PLUS            reduce using rule 48 (factor -> NOT factor .)
+    MINUS           reduce using rule 48 (factor -> NOT factor .)
+    BIGGER          reduce using rule 48 (factor -> NOT factor .)
+    SMALLER         reduce using rule 48 (factor -> NOT factor .)
+    BIGGEREQUAL     reduce using rule 48 (factor -> NOT factor .)
+    SMALLEREQUAL    reduce using rule 48 (factor -> NOT factor .)
+    EQUAL           reduce using rule 48 (factor -> NOT factor .)
+    NOTEQUAL        reduce using rule 48 (factor -> NOT factor .)
+    AND             reduce using rule 48 (factor -> NOT factor .)
+    SEMICOLLON      reduce using rule 48 (factor -> NOT factor .)
+    OR              reduce using rule 48 (factor -> NOT factor .)
+    COMMA           reduce using rule 48 (factor -> NOT factor .)
+    RPAR            reduce using rule 48 (factor -> NOT factor .)
 
-    command                        shift and go to state 75
-    block                          shift and go to state 7
 
 state 75
 
-    (9) command -> IF LPAR orexpr RPAR command ELSE command .
+    (49) factor -> INPUT LPAR . RPAR
 
-    CLOSEBLOCK      reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
-    IDENTIFIER      reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
-    PRINT           reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
-    WHILE           reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
-    IF              reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
-    OPENBLOCK       reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
-    ELSE            reduce using rule 9 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    RPAR            shift and go to state 98
+
+
+state 76
+
+    (14) command -> IDENTIFIER LPAR inputparams RPAR . SEMICOLLON
+
+    SEMICOLLON      shift and go to state 99
+
+
+state 77
+
+    (15) command -> IDENTIFIER LPAR RPAR SEMICOLLON .
+
+    CLOSEBLOCK      reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    IDENTIFIER      reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    PRINT           reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    RETURN          reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    WHILE           reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    IF              reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    OPENBLOCK       reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+    ELSE            reduce using rule 15 (command -> IDENTIFIER LPAR RPAR SEMICOLLON .)
+
+
+state 78
+
+    (50) inputparams -> orexpr COMMA . inputparams
+    (50) inputparams -> . orexpr COMMA inputparams
+    (51) inputparams -> . orexpr
+    (20) orexpr -> . orexpr OR andexpr
+    (21) orexpr -> . andexpr
+    (22) andexpr -> . andexpr AND eqexpr
+    (23) andexpr -> . eqexpr
+    (24) eqexpr -> . eqexpr EQUAL relexpr
+    (25) eqexpr -> . eqexpr NOTEQUAL relexpr
+    (26) eqexpr -> . relexpr
+    (27) relexpr -> . relexpr BIGGER expression
+    (28) relexpr -> . relexpr SMALLER expression
+    (29) relexpr -> . relexpr BIGGEREQUAL expression
+    (30) relexpr -> . relexpr SMALLEREQUAL expression
+    (31) relexpr -> . expression
+    (32) expression -> . expression PLUS term
+    (33) expression -> . expression MINUS term
+    (34) expression -> . term
+    (35) term -> . term MULT factor
+    (36) term -> . term DIV factor
+    (37) term -> . factor
+    (38) factor -> . NUMBER
+    (39) factor -> . IDENTIFIER
+    (40) factor -> . IDENTIFIER LPAR inputparams RPAR
+    (41) factor -> . IDENTIFIER LPAR RPAR
+    (42) factor -> . TRUE
+    (43) factor -> . FALSE
+    (44) factor -> . STRING
+    (45) factor -> . LPAR orexpr RPAR
+    (46) factor -> . PLUS factor
+    (47) factor -> . MINUS factor
+    (48) factor -> . NOT factor
+    (49) factor -> . INPUT LPAR RPAR
+
+    NUMBER          shift and go to state 43
+    IDENTIFIER      shift and go to state 33
+    TRUE            shift and go to state 45
+    FALSE           shift and go to state 46
+    STRING          shift and go to state 47
+    LPAR            shift and go to state 44
+    PLUS            shift and go to state 39
+    MINUS           shift and go to state 41
+    NOT             shift and go to state 48
+    INPUT           shift and go to state 49
+
+    orexpr                         shift and go to state 52
+    inputparams                    shift and go to state 100
+    andexpr                        shift and go to state 35
+    eqexpr                         shift and go to state 36
+    relexpr                        shift and go to state 37
+    expression                     shift and go to state 38
+    term                           shift and go to state 40
+    factor                         shift and go to state 42
+
+state 79
+
+    (12) command -> PRINT LPAR orexpr RPAR . SEMICOLLON
+
+    SEMICOLLON      shift and go to state 101
+
+
+state 80
+
+    (13) command -> RETURN IDENTIFIER orexpr SEMICOLLON .
+
+    CLOSEBLOCK      reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    IDENTIFIER      reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    PRINT           reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    RETURN          reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    WHILE           reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    IF              reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    OPENBLOCK       reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+    ELSE            reduce using rule 13 (command -> RETURN IDENTIFIER orexpr SEMICOLLON .)
+
+
+state 81
+
+    (17) command -> WHILE LPAR orexpr RPAR . command
+    (11) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
+    (12) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
+    (13) command -> . RETURN IDENTIFIER orexpr SEMICOLLON
+    (14) command -> . IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+    (15) command -> . IDENTIFIER LPAR RPAR SEMICOLLON
+    (16) command -> . block
+    (17) command -> . WHILE LPAR orexpr RPAR command
+    (18) command -> . IF LPAR orexpr RPAR command
+    (19) command -> . IF LPAR orexpr RPAR command ELSE command
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
+
+    IDENTIFIER      shift and go to state 19
+    PRINT           shift and go to state 20
+    RETURN          shift and go to state 21
+    WHILE           shift and go to state 23
+    IF              shift and go to state 24
+    OPENBLOCK       shift and go to state 14
+
+    command                        shift and go to state 102
+    block                          shift and go to state 22
+
+state 82
+
+    (18) command -> IF LPAR orexpr RPAR . command
+    (19) command -> IF LPAR orexpr RPAR . command ELSE command
+    (11) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
+    (12) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
+    (13) command -> . RETURN IDENTIFIER orexpr SEMICOLLON
+    (14) command -> . IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+    (15) command -> . IDENTIFIER LPAR RPAR SEMICOLLON
+    (16) command -> . block
+    (17) command -> . WHILE LPAR orexpr RPAR command
+    (18) command -> . IF LPAR orexpr RPAR command
+    (19) command -> . IF LPAR orexpr RPAR command ELSE command
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
+
+    IDENTIFIER      shift and go to state 19
+    PRINT           shift and go to state 20
+    RETURN          shift and go to state 21
+    WHILE           shift and go to state 23
+    IF              shift and go to state 24
+    OPENBLOCK       shift and go to state 14
+
+    command                        shift and go to state 103
+    block                          shift and go to state 22
+
+state 83
+
+    (40) factor -> IDENTIFIER LPAR inputparams . RPAR
+
+    RPAR            shift and go to state 104
+
+
+state 84
+
+    (41) factor -> IDENTIFIER LPAR RPAR .
+
+    MULT            reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    DIV             reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    PLUS            reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    MINUS           reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    BIGGER          reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    SMALLER         reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    BIGGEREQUAL     reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    SMALLEREQUAL    reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    EQUAL           reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    NOTEQUAL        reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    AND             reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    SEMICOLLON      reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    OR              reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    COMMA           reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+    RPAR            reduce using rule 41 (factor -> IDENTIFIER LPAR RPAR .)
+
+
+state 85
+
+    (20) orexpr -> orexpr OR andexpr .
+    (22) andexpr -> andexpr . AND eqexpr
+
+    SEMICOLLON      reduce using rule 20 (orexpr -> orexpr OR andexpr .)
+    OR              reduce using rule 20 (orexpr -> orexpr OR andexpr .)
+    COMMA           reduce using rule 20 (orexpr -> orexpr OR andexpr .)
+    RPAR            reduce using rule 20 (orexpr -> orexpr OR andexpr .)
+    AND             shift and go to state 60
+
+
+state 86
+
+    (22) andexpr -> andexpr AND eqexpr .
+    (24) eqexpr -> eqexpr . EQUAL relexpr
+    (25) eqexpr -> eqexpr . NOTEQUAL relexpr
+
+    AND             reduce using rule 22 (andexpr -> andexpr AND eqexpr .)
+    SEMICOLLON      reduce using rule 22 (andexpr -> andexpr AND eqexpr .)
+    OR              reduce using rule 22 (andexpr -> andexpr AND eqexpr .)
+    COMMA           reduce using rule 22 (andexpr -> andexpr AND eqexpr .)
+    RPAR            reduce using rule 22 (andexpr -> andexpr AND eqexpr .)
+    EQUAL           shift and go to state 61
+    NOTEQUAL        shift and go to state 62
+
+
+state 87
+
+    (24) eqexpr -> eqexpr EQUAL relexpr .
+    (27) relexpr -> relexpr . BIGGER expression
+    (28) relexpr -> relexpr . SMALLER expression
+    (29) relexpr -> relexpr . BIGGEREQUAL expression
+    (30) relexpr -> relexpr . SMALLEREQUAL expression
+
+    EQUAL           reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    NOTEQUAL        reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    AND             reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    SEMICOLLON      reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    OR              reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    COMMA           reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    RPAR            reduce using rule 24 (eqexpr -> eqexpr EQUAL relexpr .)
+    BIGGER          shift and go to state 63
+    SMALLER         shift and go to state 64
+    BIGGEREQUAL     shift and go to state 65
+    SMALLEREQUAL    shift and go to state 66
+
+
+state 88
+
+    (25) eqexpr -> eqexpr NOTEQUAL relexpr .
+    (27) relexpr -> relexpr . BIGGER expression
+    (28) relexpr -> relexpr . SMALLER expression
+    (29) relexpr -> relexpr . BIGGEREQUAL expression
+    (30) relexpr -> relexpr . SMALLEREQUAL expression
+
+    EQUAL           reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    NOTEQUAL        reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    AND             reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    SEMICOLLON      reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    OR              reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    COMMA           reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    RPAR            reduce using rule 25 (eqexpr -> eqexpr NOTEQUAL relexpr .)
+    BIGGER          shift and go to state 63
+    SMALLER         shift and go to state 64
+    BIGGEREQUAL     shift and go to state 65
+    SMALLEREQUAL    shift and go to state 66
+
+
+state 89
+
+    (27) relexpr -> relexpr BIGGER expression .
+    (32) expression -> expression . PLUS term
+    (33) expression -> expression . MINUS term
+
+    BIGGER          reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    SMALLER         reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    BIGGEREQUAL     reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    SMALLEREQUAL    reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    EQUAL           reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    NOTEQUAL        reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    AND             reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    SEMICOLLON      reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    OR              reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    COMMA           reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    RPAR            reduce using rule 27 (relexpr -> relexpr BIGGER expression .)
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+
+
+state 90
+
+    (28) relexpr -> relexpr SMALLER expression .
+    (32) expression -> expression . PLUS term
+    (33) expression -> expression . MINUS term
+
+    BIGGER          reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    SMALLER         reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    BIGGEREQUAL     reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    SMALLEREQUAL    reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    EQUAL           reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    NOTEQUAL        reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    AND             reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    SEMICOLLON      reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    OR              reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    COMMA           reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    RPAR            reduce using rule 28 (relexpr -> relexpr SMALLER expression .)
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+
+
+state 91
+
+    (29) relexpr -> relexpr BIGGEREQUAL expression .
+    (32) expression -> expression . PLUS term
+    (33) expression -> expression . MINUS term
+
+    BIGGER          reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    SMALLER         reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    BIGGEREQUAL     reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    SMALLEREQUAL    reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    EQUAL           reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    NOTEQUAL        reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    AND             reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    SEMICOLLON      reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    OR              reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    COMMA           reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    RPAR            reduce using rule 29 (relexpr -> relexpr BIGGEREQUAL expression .)
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+
+
+state 92
+
+    (30) relexpr -> relexpr SMALLEREQUAL expression .
+    (32) expression -> expression . PLUS term
+    (33) expression -> expression . MINUS term
+
+    BIGGER          reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    SMALLER         reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    BIGGEREQUAL     reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    SMALLEREQUAL    reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    EQUAL           reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    NOTEQUAL        reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    AND             reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    SEMICOLLON      reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    OR              reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    COMMA           reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    RPAR            reduce using rule 30 (relexpr -> relexpr SMALLEREQUAL expression .)
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+
+
+state 93
+
+    (32) expression -> expression PLUS term .
+    (35) term -> term . MULT factor
+    (36) term -> term . DIV factor
+
+    PLUS            reduce using rule 32 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 32 (expression -> expression PLUS term .)
+    BIGGER          reduce using rule 32 (expression -> expression PLUS term .)
+    SMALLER         reduce using rule 32 (expression -> expression PLUS term .)
+    BIGGEREQUAL     reduce using rule 32 (expression -> expression PLUS term .)
+    SMALLEREQUAL    reduce using rule 32 (expression -> expression PLUS term .)
+    EQUAL           reduce using rule 32 (expression -> expression PLUS term .)
+    NOTEQUAL        reduce using rule 32 (expression -> expression PLUS term .)
+    AND             reduce using rule 32 (expression -> expression PLUS term .)
+    SEMICOLLON      reduce using rule 32 (expression -> expression PLUS term .)
+    OR              reduce using rule 32 (expression -> expression PLUS term .)
+    COMMA           reduce using rule 32 (expression -> expression PLUS term .)
+    RPAR            reduce using rule 32 (expression -> expression PLUS term .)
+    MULT            shift and go to state 70
+    DIV             shift and go to state 71
+
+
+state 94
+
+    (33) expression -> expression MINUS term .
+    (35) term -> term . MULT factor
+    (36) term -> term . DIV factor
+
+    PLUS            reduce using rule 33 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 33 (expression -> expression MINUS term .)
+    BIGGER          reduce using rule 33 (expression -> expression MINUS term .)
+    SMALLER         reduce using rule 33 (expression -> expression MINUS term .)
+    BIGGEREQUAL     reduce using rule 33 (expression -> expression MINUS term .)
+    SMALLEREQUAL    reduce using rule 33 (expression -> expression MINUS term .)
+    EQUAL           reduce using rule 33 (expression -> expression MINUS term .)
+    NOTEQUAL        reduce using rule 33 (expression -> expression MINUS term .)
+    AND             reduce using rule 33 (expression -> expression MINUS term .)
+    SEMICOLLON      reduce using rule 33 (expression -> expression MINUS term .)
+    OR              reduce using rule 33 (expression -> expression MINUS term .)
+    COMMA           reduce using rule 33 (expression -> expression MINUS term .)
+    RPAR            reduce using rule 33 (expression -> expression MINUS term .)
+    MULT            shift and go to state 70
+    DIV             shift and go to state 71
+
+
+state 95
+
+    (35) term -> term MULT factor .
+
+    MULT            reduce using rule 35 (term -> term MULT factor .)
+    DIV             reduce using rule 35 (term -> term MULT factor .)
+    PLUS            reduce using rule 35 (term -> term MULT factor .)
+    MINUS           reduce using rule 35 (term -> term MULT factor .)
+    BIGGER          reduce using rule 35 (term -> term MULT factor .)
+    SMALLER         reduce using rule 35 (term -> term MULT factor .)
+    BIGGEREQUAL     reduce using rule 35 (term -> term MULT factor .)
+    SMALLEREQUAL    reduce using rule 35 (term -> term MULT factor .)
+    EQUAL           reduce using rule 35 (term -> term MULT factor .)
+    NOTEQUAL        reduce using rule 35 (term -> term MULT factor .)
+    AND             reduce using rule 35 (term -> term MULT factor .)
+    SEMICOLLON      reduce using rule 35 (term -> term MULT factor .)
+    OR              reduce using rule 35 (term -> term MULT factor .)
+    COMMA           reduce using rule 35 (term -> term MULT factor .)
+    RPAR            reduce using rule 35 (term -> term MULT factor .)
+
+
+state 96
+
+    (36) term -> term DIV factor .
+
+    MULT            reduce using rule 36 (term -> term DIV factor .)
+    DIV             reduce using rule 36 (term -> term DIV factor .)
+    PLUS            reduce using rule 36 (term -> term DIV factor .)
+    MINUS           reduce using rule 36 (term -> term DIV factor .)
+    BIGGER          reduce using rule 36 (term -> term DIV factor .)
+    SMALLER         reduce using rule 36 (term -> term DIV factor .)
+    BIGGEREQUAL     reduce using rule 36 (term -> term DIV factor .)
+    SMALLEREQUAL    reduce using rule 36 (term -> term DIV factor .)
+    EQUAL           reduce using rule 36 (term -> term DIV factor .)
+    NOTEQUAL        reduce using rule 36 (term -> term DIV factor .)
+    AND             reduce using rule 36 (term -> term DIV factor .)
+    SEMICOLLON      reduce using rule 36 (term -> term DIV factor .)
+    OR              reduce using rule 36 (term -> term DIV factor .)
+    COMMA           reduce using rule 36 (term -> term DIV factor .)
+    RPAR            reduce using rule 36 (term -> term DIV factor .)
+
+
+state 97
+
+    (45) factor -> LPAR orexpr RPAR .
+
+    MULT            reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    DIV             reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    PLUS            reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    MINUS           reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    BIGGER          reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    SMALLER         reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    BIGGEREQUAL     reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    SMALLEREQUAL    reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    EQUAL           reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    NOTEQUAL        reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    AND             reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    SEMICOLLON      reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    OR              reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    COMMA           reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+    RPAR            reduce using rule 45 (factor -> LPAR orexpr RPAR .)
+
+
+state 98
+
+    (49) factor -> INPUT LPAR RPAR .
+
+    MULT            reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    DIV             reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    PLUS            reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    MINUS           reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    BIGGER          reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    SMALLER         reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    BIGGEREQUAL     reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    SMALLEREQUAL    reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    EQUAL           reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    NOTEQUAL        reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    AND             reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    SEMICOLLON      reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    OR              reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    COMMA           reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+    RPAR            reduce using rule 49 (factor -> INPUT LPAR RPAR .)
+
+
+state 99
+
+    (14) command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .
+
+    CLOSEBLOCK      reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    IDENTIFIER      reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    PRINT           reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    RETURN          reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    WHILE           reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    IF              reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    OPENBLOCK       reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+    ELSE            reduce using rule 14 (command -> IDENTIFIER LPAR inputparams RPAR SEMICOLLON .)
+
+
+state 100
+
+    (50) inputparams -> orexpr COMMA inputparams .
+
+    RPAR            reduce using rule 50 (inputparams -> orexpr COMMA inputparams .)
+
+
+state 101
+
+    (12) command -> PRINT LPAR orexpr RPAR SEMICOLLON .
+
+    CLOSEBLOCK      reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    IDENTIFIER      reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    PRINT           reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    RETURN          reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    WHILE           reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    IF              reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    OPENBLOCK       reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+    ELSE            reduce using rule 12 (command -> PRINT LPAR orexpr RPAR SEMICOLLON .)
+
+
+state 102
+
+    (17) command -> WHILE LPAR orexpr RPAR command .
+
+    CLOSEBLOCK      reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    IDENTIFIER      reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    PRINT           reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    RETURN          reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    WHILE           reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    IF              reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    OPENBLOCK       reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+    ELSE            reduce using rule 17 (command -> WHILE LPAR orexpr RPAR command .)
+
+
+state 103
+
+    (18) command -> IF LPAR orexpr RPAR command .
+    (19) command -> IF LPAR orexpr RPAR command . ELSE command
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    CLOSEBLOCK      reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    IDENTIFIER      reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    PRINT           reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    RETURN          reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    WHILE           reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    IF              reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    OPENBLOCK       reduce using rule 18 (command -> IF LPAR orexpr RPAR command .)
+    ELSE            shift and go to state 105
+
+  ! ELSE            [ reduce using rule 18 (command -> IF LPAR orexpr RPAR command .) ]
+
+
+state 104
+
+    (40) factor -> IDENTIFIER LPAR inputparams RPAR .
+
+    MULT            reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    DIV             reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    PLUS            reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    MINUS           reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    BIGGER          reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    SMALLER         reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    BIGGEREQUAL     reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    SMALLEREQUAL    reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    EQUAL           reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    NOTEQUAL        reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    AND             reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    SEMICOLLON      reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    OR              reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    COMMA           reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+    RPAR            reduce using rule 40 (factor -> IDENTIFIER LPAR inputparams RPAR .)
+
+
+state 105
+
+    (19) command -> IF LPAR orexpr RPAR command ELSE . command
+    (11) command -> . IDENTIFIER ATTRIB orexpr SEMICOLLON
+    (12) command -> . PRINT LPAR orexpr RPAR SEMICOLLON
+    (13) command -> . RETURN IDENTIFIER orexpr SEMICOLLON
+    (14) command -> . IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+    (15) command -> . IDENTIFIER LPAR RPAR SEMICOLLON
+    (16) command -> . block
+    (17) command -> . WHILE LPAR orexpr RPAR command
+    (18) command -> . IF LPAR orexpr RPAR command
+    (19) command -> . IF LPAR orexpr RPAR command ELSE command
+    (8) block -> . OPENBLOCK listcommand CLOSEBLOCK
+
+    IDENTIFIER      shift and go to state 19
+    PRINT           shift and go to state 20
+    RETURN          shift and go to state 21
+    WHILE           shift and go to state 23
+    IF              shift and go to state 24
+    OPENBLOCK       shift and go to state 14
+
+    command                        shift and go to state 106
+    block                          shift and go to state 22
+
+state 106
+
+    (19) command -> IF LPAR orexpr RPAR command ELSE command .
+
+    CLOSEBLOCK      reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    IDENTIFIER      reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    PRINT           reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    RETURN          reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    WHILE           reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    IF              reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    OPENBLOCK       reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
+    ELSE            reduce using rule 19 (command -> IF LPAR orexpr RPAR command ELSE command .)
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for ELSE in state 73 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 103 resolved as shift

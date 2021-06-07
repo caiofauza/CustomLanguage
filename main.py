@@ -2,7 +2,8 @@ import sys
 import numpy as np
 import ply.lex as lex
 import ply.yacc as yacc
-from nodes import Bin_op, Assignment_op, Condition_Op, Input_op, While_Op, Un_op, Print_op, Statement_Op, Bool_val, Identifier_val, Int_val, String_val
+from nodes import (Bin_op, Assignment_op, Condition_Op, Func_Call, Func_Dec, Var_Dec, Input_op, Return_val,
+                   While_Op, Un_op, Print_op, Statement_Op, Bool_val, Identifier_val, Int_val, String_val, Return_val)
 
 reserved = {
     'toolkit': 'FUNCTION',
@@ -21,7 +22,7 @@ reserved = {
 
 tokens = ['NUMBER', 'PLUS', 'MINUS', 'MULT', 'DIV', 'LPAR', 'RPAR', 'IDENTIFIER',
           'STRING', 'EQUAL', 'ATTRIB', 'NOTEQUAL', 'NOT', 'BIGGER', 'SMALLER', 'BIGGEREQUAL',
-          'SMALLEREQUAL', 'SEMICOLLON', 'OPENBLOCK', 'CLOSEBLOCK'] + list(reserved.values())
+          'SMALLEREQUAL', 'COMMA', 'SEMICOLLON', 'OPENBLOCK', 'CLOSEBLOCK'] + list(reserved.values())
 
 t_PLUS = r'\+'
 t_MINUS = r'\-'
@@ -38,32 +39,39 @@ t_BIGGER = r'\>'
 t_SMALLER = r'\<'
 t_BIGGEREQUAL = r'\>='
 t_SMALLEREQUAL = r'\<='
+t_COMMA = r'\,'
 t_SEMICOLLON = r'\;'
 t_OPENBLOCK = r'\{'
 t_CLOSEBLOCK = r'\}'
 t_ignore = ' \t'
+
 
 def t_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
+
 def t_IDENTIFIER(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, 'IDENTIFIER')
     return t
 
+
 def t_COMMENT(t):
     r'\//.*'
     pass
+
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+
 def t_error(t):
     print('Invalid syntax. Character {} is invalid'.format(t.value[0]))
     t.lexer.skip(1)
+
 
 precedence = (
     ('left', 'OR'),
@@ -75,10 +83,57 @@ precedence = (
     ('right', 'UMINUS', 'UPLUS', 'UNOT')
 )
 
+
+def p_functions(p):
+    '''functions :  listfuncdefblock'''
+    functions = p[1]
+    functions.append(Func_Call('main', []))
+    program = Statement_Op('BLOCK', functions)
+    p[0] = program
+
+
+def p_listfuncdefblock(p):
+    '''listfuncdefblock : listfuncdefblock funcdefblock
+                         | funcdefblock '''
+    if(len(p) == 2):
+        p[0] = [p[1]]
+    else:
+        functions = np.ndarray.flatten(np.array(p[1])).tolist()
+        functions.append(p[2])
+        p[0] = functions
+
+
+def p_funcdefblock(p):
+    '''funcdefblock : FUNCTION IDENTIFIER LPAR funcparams RPAR block
+                      | FUNCTION IDENTIFIER LPAR RPAR block '''
+    var_dec = [Var_Dec('VARDEC', [p[2]])]
+    if(len(p) == 6):
+        var_dec.append(p[5])
+        p[0] = Func_Dec('FUNCDEF', var_dec)
+    else:
+        for i in p[4]:
+            var_dec[0].children.append(i)
+        var_dec.append(p[6])
+        function_dec = Func_Dec('FUNCDEF', var_dec)
+        p[0] = function_dec
+
+
+def p_funcparams(p):
+    '''funcparams : IDENTIFIER COMMA funcparams
+                   | IDENTIFIER '''
+    if(len(p) == 2):
+        p[0] = [p[1]]
+    else:
+        params = np.ndarray.flatten(np.array(p[3])).tolist()
+        params.append(p[1])
+        p[0] = params
+
+
 def p_block(p):
     '''block : OPENBLOCK listcommand CLOSEBLOCK'''
     if(len(p) == 4):
         p[0] = Statement_Op('BLOCK', p[2])
+
 
 def p_listcommand(p):
     '''listcommand : listcommand command 
@@ -90,9 +145,13 @@ def p_listcommand(p):
         commands.append(p[2])
         p[0] = commands
 
+
 def p_command(p):
     '''command : IDENTIFIER ATTRIB orexpr SEMICOLLON
                | PRINT LPAR orexpr RPAR SEMICOLLON
+               | RETURN IDENTIFIER orexpr SEMICOLLON
+               | IDENTIFIER LPAR inputparams RPAR SEMICOLLON
+               | IDENTIFIER LPAR RPAR SEMICOLLON
                | block
                | WHILE LPAR orexpr RPAR command
                | IF LPAR orexpr RPAR command
@@ -107,11 +166,18 @@ def p_command(p):
             p[0] = Print_op(p[1], [p[3]])
         elif(p[1] == 'until'):
             p[0] = While_Op(p[1], [p[3], p[5]])
+        elif(p[1] == 'recover'):
+            p[0] = Return_val('RETURN', [p[2], p[3]])
+        elif(p[1] != 'if' and p[2] == '(' and p[4] == ')'):
+            p[0] = Func_Call(p[1], p[3])
+        elif(p[1] != 'if' and p[2] == '(' and p[3] == ')'):
+            p[0] = Func_Call(p[1], [])
         elif(p[1] == 'if'):
             if(len(p) == 6):
                 p[0] = Condition_Op(p[1], [p[3], p[5]])
             else:
                 p[0] = Condition_Op(p[1], [p[3], p[5], p[7]])
+
 
 def p_orexpr(p):
     '''orexpr : orexpr OR andexpr
@@ -121,6 +187,7 @@ def p_orexpr(p):
     else:
         p[0] = Bin_op(p[2], [p[1], p[3]])
 
+
 def p_andexpr(p):
     '''andexpr : andexpr AND eqexpr
               | eqexpr'''
@@ -128,6 +195,7 @@ def p_andexpr(p):
         p[0] = p[1]
     else:
         p[0] = Bin_op(p[2], [p[1], p[3]])
+
 
 def p_eqexpr(p):
     '''eqexpr : eqexpr EQUAL relexpr
@@ -137,6 +205,7 @@ def p_eqexpr(p):
         p[0] = p[1]
     else:
         p[0] = Bin_op(p[2], [p[1], p[3]])
+
 
 def p_relexpr(p):
     '''relexpr : relexpr BIGGER expression
@@ -149,6 +218,7 @@ def p_relexpr(p):
     else:
         p[0] = Bin_op(p[2], [p[1], p[3]])
 
+
 def p_expression(p):
     '''expression : expression PLUS term
                   | expression MINUS term
@@ -157,6 +227,7 @@ def p_expression(p):
         p[0] = p[1]
     else:
         p[0] = Bin_op(p[2], [p[1], p[3]])
+
 
 def p_term(p):
     '''term : term MULT factor
@@ -167,9 +238,12 @@ def p_term(p):
     else:
         p[0] = Bin_op(p[2], [p[1], p[3]])
 
+
 def p_factor(p):
     '''factor : NUMBER
               | IDENTIFIER
+              | IDENTIFIER LPAR inputparams RPAR
+              | IDENTIFIER LPAR RPAR
               | TRUE
               | FALSE
               | STRING
@@ -193,11 +267,28 @@ def p_factor(p):
             p[0] = Statement_Op('BLOCK', [p[2]])
         elif(p[1] == 'door'):
             p[0] = Input_op(p[1])
+        elif(len(p) == 4 and isinstance(p[1], str) and p[2] == '(' and p[3] == ')'):
+            p[0] = Func_Call(p[1], [])
+        elif(isinstance(p[1], str) and p[2] == '(' and p[4] == ')'):
+            p[0] = Func_Call(p[1], p[3])
         else:
             p[0] = Un_op(p[1], [p[2]])
 
+
+def p_inputparams(p):
+    '''inputparams : orexpr COMMA inputparams
+                   | orexpr '''
+    if(len(p) == 2):
+        p[0] = [p[1]]
+    else:
+        params = np.ndarray.flatten(np.array(p[3])).tolist()
+        params.append(p[1])
+        p[0] = params
+
+
 def p_error(p):
-    print('Invalid syntax. Command: {}'.format(p.value))
+    print('Invalid syntax. Command: {} - {}'.format(p.value, p))
+
 
 def get_tokens():
     tokens = []
@@ -207,6 +298,7 @@ def get_tokens():
             break
         tokens.append(token)
     return tokens
+
 
 input_file = open(sys.argv[1], 'r')
 input_code = input_file.readlines()
