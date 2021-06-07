@@ -11,7 +11,6 @@ reserved = {
     'door': 'INPUT',
     'show': 'PRINT',
     'until': 'WHILE',
-    'over': 'FOR',
     'if': 'IF',
     'else': 'ELSE',
     'or': 'OR',
