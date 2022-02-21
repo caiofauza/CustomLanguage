@@ -1,7 +1,9 @@
-# CustomLanguage
-Insper 2021.1 - Lógica da Computação
+# Custom Language
+Custom language written with python.
 
-Relatório: **report.pdf**
+Report file (PT/BR): **report.pdf**
 
-Para executar, utilize: 
+Run your code with: 
+> python3 main.py {filename} 
+
 > python3 main.py examples/{filename} 
